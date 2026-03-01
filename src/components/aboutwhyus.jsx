@@ -5,6 +5,44 @@ import missionImg from "../assets/mission.png";
 import visionImg from "../assets/vision.png";
 import valuesImg from "../assets/values.png";
 
+
+const content = {
+  mission: {
+    title: "Our Mission",
+    paragraphs: [
+      "Our mission is to build scalable digital products that solve real-world problems and create measurable business impact.",
+      "We focus on combining design excellence with modern technology to craft experiences that users genuinely love.",
+      "Every project we take on is driven by strategy, performance, and long-term growth."
+    ],
+    quote: "We build with purpose, precision, and performance."
+  },
+
+  vision: {
+    title: "Our Vision",
+    paragraphs: [
+      "Our vision is to become a trusted digital partner for brands worldwide.",
+      "We aim to lead innovation by blending creativity, technology, and marketing intelligence.",
+      "We envision a future where digital experiences feel effortless, powerful, and human."
+    ],
+    quote: "Innovation today. Impact tomorrow."
+  },
+
+  values: {
+    title: "Our Values",
+    paragraphs: [
+      "01 — Bold Clarity",
+      "02 — Young Energy",
+      "03 — Purpose Over Noise",
+      "04 — Design with Intelligence",
+      "05 — Ownership Mindset",
+      "06 — Growth-Driven Decisions",
+      "07 — Long-Term Vision",
+    ],
+    quote: []
+  }
+};
+
+
 const AboutWhyUs = () => {
   const [active, setActive] = useState("mission");
 
@@ -83,8 +121,8 @@ const AboutWhyUs = () => {
                 active === "mission"
                   ? "translateX(0%)"
                   : active === "vision"
-                  ? "translateX(100%)"
-                  : "translateX(200%)",
+                    ? "translateX(100%)"
+                    : "translateX(200%)",
             }}
           />
         </div>
@@ -119,28 +157,23 @@ const AboutWhyUs = () => {
           {/* RIGHT TEXT */}
           <div key={active} className="text-black animate-slideUp">
 
+            
+
             <h3 className="text-2xl md:text-3xl font-semibold text-purple-600 mb-4 md:mb-6">
-              {titles[active]}
+              {content[active].title}
             </h3>
 
-            <p className="text-base md:text-lg leading-relaxed mb-4 md:mb-6">
-              We combine strategy, design, and technology to build scalable digital
-              products that drive growth and engagement.
-            </p>
-
-            <p className="text-base md:text-lg leading-relaxed mb-4 md:mb-6">
-              At Floow Studios, our mission is to create digital solutions that
-              combine thoughtful design, modern technology, and measurable performance.
-            </p>
-
-            <p className="text-base md:text-lg leading-relaxed mb-4 md:mb-6">
-              We work closely with our clients to understand their vision and transform
-              it into scalable, reliable, and impactful digital products.
-            </p>
+            {content[active].paragraphs.map((para, index) => (
+              <p
+                key={index}
+                className="text-base md:text-lg leading-relaxed mb-4 md:mb-6"
+              >
+                {para}
+              </p>
+            ))}
 
             <p className="text-lg md:text-xl font-semibold mt-4 md:mt-6">
-              “We don’t just build digital products — we build
-              momentum for brands ready to lead.”
+              {content[active].quote}
             </p>
 
           </div>

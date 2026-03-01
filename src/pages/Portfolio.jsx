@@ -117,30 +117,19 @@ const Portfolio = () => {
                   drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]
                 "
               >
-                "Where Ideas Turn"
+                Explore our portfolio —
               </span>
 
-              <span className="text-white"> Into Clicks and Clients."</span>
+              <span className="text-white"> real work, real results, </span>
 
               <span className="text-[#a8a8a8] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-                {" "}SEO, Social
+                real brand transformations.
               </span>
 
               <br />
 
-              <span className="text-[#b2b2b2] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-                Media,
-              </span>
+              
 
-              <span
-                className="
-                  bg-gradient-to-r from-gray-400 to-white
-                  bg-clip-text text-transparent
-                  drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]
-                "
-              >
-                {" "}and Websites that work.
-              </span>
 
             </p>
           </div>

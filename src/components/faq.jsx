@@ -37,11 +37,11 @@ const FAQ = () => {
 
       {/* HEADER */}
       <div className="text-center mb-16 px-6">
-        <p className="text-purple-400 font-medium mb-3">
+        <p className="text-purple-400 font-semibold text-2xl mb-3">
           FAQ's
         </p>
 
-        <h2 className="text-4xl md:text-5xl font-light leading-tight">
+        <h2 className="text-4xl md:text-4xl font-light leading-tight">
           Quick Answers to Common <br />
           Questions
         </h2>

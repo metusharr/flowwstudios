@@ -21,7 +21,7 @@ const AboutHero = () => {
           {/* LEFT CONTENT */}
           <div className="space-y-8 px-4 lg:px-10 pt-16 lg:pt-0">
 
-            <p className="text-purple-400 text-lg font-medium">
+            <p className="text-purple-400 text-2xl font-medium">
               About us
             </p>
 
@@ -86,7 +86,7 @@ const AboutHero = () => {
 
             {/* MARQUEE TEXT */}
             <div className="overflow-hidden w-full">
-              <div className="whitespace-nowrap animate-marquee text-gray-300 text-sm lg:text-base py-3 lg:py-5 px-4 lg:px-6">
+              <div className="whitespace-nowrap animate-marquee text-gray-300 text-md lg:text-lg py-3 lg:py-5 px-4 lg:px-6">
                 Our goal is to be your trusted partner, ensuring every project is on time, user-first, and built for success.
                 <span className="mx-8 lg:mx-16">
                   Our goal is to be your trusted partner, ensuring every project is on time, user-first, and built for success.
@@ -119,8 +119,8 @@ const AboutHero = () => {
           {/* LEFT CONTENT */}
           <div className="space-y-6 lg:space-y-8">
 
-            <p className="text-purple-400 font-medium text-lg">
-              Why us?
+            <p className="text-purple-400 font-medium text-2xl">
+             Our Edge
             </p>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight">
@@ -128,8 +128,7 @@ const AboutHero = () => {
             </h2>
 
             <p className="text-gray-300 text-base lg:text-lg max-w-xl leading-relaxed">
-              At Floow Studios, our mission is to create digital solutions that
-              combine thoughtful design, modern technology, and measurable performance.
+              Thoughtful design, modern tech, and measurable results — all in one place.
             </p>
 
             {/* QUOTE BOX */}
@@ -156,7 +155,7 @@ const AboutHero = () => {
               <img
                 src="/tushar.png"
                 alt="Tushar"
-                className="w-full h-[220px] sm:h-[320px] lg:h-[420px] object-cover"
+                className="w-full h-[220px] sm:h-[320px] lg:h-[420px] object-fit"
               />
 
 
@@ -168,7 +167,7 @@ const AboutHero = () => {
               <img
                 src="/gurleen.png"
                 alt="Gurleen"
-                className="w-full h-[220px] sm:h-[320px] lg:h-[420px] object-cover"
+                className="w-full h-[220px] sm:h-[320px] lg:h-[420px] object-fit"
               />
 
 

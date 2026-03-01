@@ -2,37 +2,37 @@ const services = [
   {
     title: "UI/UX Designing",
     desc:
-      "Our team visits your location to capture authentic footage, eliminating the need for you to provide any media assets.",
+      "Intuitive, user-focused interfaces that deliver seamless digital experiences.",
     icon: "🎨",
   },
   {
     title: "Web & App Development",
     desc:
-      "We build high-performance websites and apps that convert visitors into loyal customers.",
+      "Fast, scalable websites and apps built to perform and grow.",
     icon: "💻",
   },
   {
     title: "Photography & Video Editing",
     desc:
-      "We capture stunning visuals that elevate your brand identity and storytelling.",
+      "High-impact visuals and cinematic edits that tell your story.",
     icon: "📷",
   },
   {
     title: "Graphic Design",
     desc:
-      "From logos to marketing creatives — we design visuals that leave a lasting impact.",
+      "Bold, modern designs that make your brand instantly recognizable.",
     icon: "🖌️",
   },
   {
     title: "Packaging Design",
     desc:
-      "We optimize your site to rank higher, drive traffic, and boost conversions.",
+      "Eye-catching packaging that stands out on every shelf.",
     icon: "🚀",
   },
   {
     title: "Social Media Marketing",
     desc:
-      "We grow your brand across social platforms with data-driven strategies.",
+      "Strategic content and campaigns that grow your online presence.",
     icon: "📣",
   },
 ];
@@ -44,13 +44,13 @@ const Services = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
 
         {/* HEADER */}
-        <p className="text-purple-400 text-center font-semibold text-xl sm:text-2xl md:text-3xl mb-3">
+        <p className="text-purple-400 text-center font-semibold text-xl sm:text-2xl md:text-2xl mb-6">
           Services we provide
         </p>
 
         <h2 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight mb-4 md:mb-6 px-2">
           “Where Ideas Turn Into <span className="text-white">Clicks</span> and
-          Clients.” SEO, Social Media, and{" "}
+          Clients. Social Media and{" "}
           <span className="text-white">Websites</span> that work.
         </h2>
 

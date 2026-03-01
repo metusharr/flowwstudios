@@ -68,11 +68,11 @@ const CustomerReviews = () => {
       flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-0 mb-10 md:mb-16">
 
         <div className="text-center md:text-left">
-          <p className="text-purple-400 text-base sm:text-lg md:text-xl font-medium mb-2">
+          <p className="text-purple-400 text-base sm:text-lg md:text-2xl font-medium mb-4">
             Customer Reviews
           </p>
 
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-light">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl text-white font-light">
             What they Say?
           </h2>
         </div>
@@ -132,7 +132,7 @@ const CustomerReviews = () => {
 
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xs sm:text-sm md:text-base font-medium">
+                  <p className="text-xs sm:text-sm md:text-base text-white font-medium">
                     {review.name}
                   </p>
                   <p className="text-[10px] sm:text-xs text-gray-400">

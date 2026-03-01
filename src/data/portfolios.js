@@ -69,9 +69,9 @@ const portfolios = [
 
         about: "Dashboard",
         theme: {
-            light: "from-green-300",
-            dark: "to-green-600",
-            colour: "text-green-500"
+            light: "from-violet-300",
+            dark: "to-violet-600",
+            colour: "text-violet-500"
         },
 
         heroImage: "portfolioimages/carTracking/trackit.png",
@@ -91,7 +91,7 @@ const portfolios = [
     {
         id: "fourth",
         brand: "Aatm Nurture",
-        industry: "Dashboard",
+        industry: "E-commerce",
         category: "Brand Identity",
 
 
@@ -133,7 +133,7 @@ const portfolios = [
         },
 
         heroImage: "portfolioimages/starbucks/starbucks.png",
-        banner1: "/portfolioimages/starbucks/banner.png",
+        banner1: "/portfolioimages/starbucks/banner1.png",
         banner2: "/portfolioimages/starbucks/banner.png",
 
 
@@ -161,7 +161,7 @@ const portfolios = [
         },
 
         heroImage: "portfolioimages/downsyndrome/downsyndrome.png",
-        banner1: "/portfolioimages/downsyndrome/banner2.png",
+        banner1: "/portfolioimages/downsyndrome/banner.png",
         banner2: "/portfolioimages/downsyndrome/banner2.png",
 
 
@@ -203,7 +203,7 @@ const portfolios = [
     {
         id: "eighth",
         brand: "Gadget Zone Techno",
-        industry: "Gadget Zone Techno",
+        industry: "E-commerce",
         category: "Brand Identity",
 
         about: "E- commerce",
@@ -215,7 +215,7 @@ const portfolios = [
 
         heroImage: "portfolioimages/gadget/gadget.png",
         banner1: "/portfolioimages/gadget/banner.png",
-        banner2: "/portfolioimages/gadget/banner.png",
+        banner2: "/portfolioimages/gadget/banner1.png",
 
 
         socialMedia: [],

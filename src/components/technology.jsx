@@ -8,6 +8,9 @@ import htmlLogo from "../assets/technologies/html.png";
 // import angularLogo from "../assets/technologies/angular.png";
 import cssLogo from "../assets/technologies/css.png";
 import jsLogo from "../assets/technologies/js.png";
+import coraldraw from "../assets/technologies/coraldraw.png";
+import adobeps from "../assets/technologies/adobeps.png";
+import indesign from "../assets/technologies/indesign.png";
 
 const technologies = [
   { name: "React", img: reactLogo },
@@ -17,6 +20,9 @@ const technologies = [
   // { name: "Angular", img: angularLogo },
   { name: "CSS", img: cssLogo },
   { name: "JavaScript", img: jsLogo },
+  { name: "Corel DRAW", img: coraldraw },
+  { name: "Adobe Photoshop", img: adobeps },
+  { name: "Adobe In design", img: indesign },
 ];
 
 const Technologies = () => {
@@ -41,11 +47,11 @@ const Technologies = () => {
   }, []);
 
   return (
-    <section className="relative  py-16 md:py-24 overflow-hidden">
+    <section className="relative  py-16 md:py-10 overflow-hidden">
 
       {/* HEADER */}
       <div className="text-center text-white mb-10 md:mb-14 px-4">
-        <p className="text-purple-400 font-medium mb-2 text-sm md:text-base">
+        <p className="text-purple-400 font-semibold mb-2 text-sm md:text-2xl">
           Technologies we use
         </p>
 

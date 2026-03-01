@@ -3,13 +3,13 @@ const Hero = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden text-white">
 
       {/* CONTENT */}
-      <div className="relative z-10 w-full max-w-[1600px] text-center px-4 sm:px-6 md:px-8">
+      <div className="relative z-10 w-full max-w-[1600px] md:mb-22 text-center px-4 sm:px-6 md:px-8">
 
         {/* HEADING */}
         <h1 className="
           text-3xl sm:text-4xl md:text-5xl lg:text-[65px]
           font-light
-          leading-tight md:leading-[1.1]
+          leading-tight md:leading-[1.5]
           mt-32 sm:mt-36 md:mt-44 lg:mt-48
         ">
           We{" "}

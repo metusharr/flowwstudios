@@ -26,8 +26,7 @@ const Footer = () => {
             />
 
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs mx-auto md:mx-0">
-              Clear, competitive, and result-oriented pricing — so you know
-              exactly what you're investing in.
+              Turn your ideas into powerful, modern digital brand experiences.
             </p>
           </div>
 
@@ -85,7 +84,7 @@ const Footer = () => {
 
                 <div className="flex items-center justify-center md:justify-start gap-3">
                   <Mail size={16} className="text-purple-400" />
-                  <span>info@floowstudios.com</span>
+                  <span>contact@floowstudios.com</span>
                 </div>
               </div>
             </div>

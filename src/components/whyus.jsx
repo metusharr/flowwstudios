@@ -22,7 +22,7 @@ const items = [
     id: 2,
     title: "Complete Digital Expertise",
     desc:
-      "From SEO and social media marketing to UI/UX design and web & app development — we provide end-to-end solutions under one roof.",
+      "From social media marketing to UI/UX design and web & app development — we provide end-to-end solutions under one roof.",
     image: why3,
   },
 ];
