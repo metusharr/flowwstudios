@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import backgroundimg from "../assets/background.png";
+
 
 const reviews = [
   {
@@ -56,7 +58,10 @@ const CustomerReviews = () => {
   }, [isPaused]);
 
   return (
-    <section id="reviews" className="relative py-10 sm:py-12 md:py-14 overflow-hidden text-white">
+    <section
+      className="relative bg-repeat bg-cover  bg-[center_-3000px]   "
+      style={{ backgroundImage: `url(${backgroundimg})` }}
+      id="reviews" relative py-10 sm:py-12 md:py-14 overflow-hidden text-white>
 
       {/* HEADER */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 

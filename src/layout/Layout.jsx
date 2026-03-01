@@ -7,17 +7,17 @@ import ScrollToTop from "../components/ScrollToTop";
 
 const Layout = () => {
   return (
-   
-        
-      <div  className="relative  bg-center  "
-         style={{ backgroundImage: `url(${backgroundimg})` }}>
-  <ScrollToTop />
-  <Navbar />
-  <main>
-    <Outlet />
-  </main>
-  <Footer />
-</div>
+
+
+    <div className="relative bg-repeat bg-cover  bg-[center_-3000px]   "
+      style={{ backgroundImage: `url(${backgroundimg})` }}>
+      <ScrollToTop />
+      <Navbar />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   );
 };
 
