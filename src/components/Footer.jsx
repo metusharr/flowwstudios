@@ -69,7 +69,7 @@ const Footer = () => {
                   </HashLink>
                 </li>
                 <li>
-                  <HashLink smooth to="/#contact" className="hover:text-white transition-colors">
+                  <HashLink smooth to="/contact" className="hover:text-white transition-colors">
                     Get in touch
                   </HashLink>
                 </li>
@@ -98,9 +98,9 @@ const Footer = () => {
               </h3>
               <ul className="space-y-2.5 text-gray-400 text-sm">
                 <li><Link to="/about" className="hover:text-white transition-colors">About us</Link></li>
-                <li><HashLink smooth to="/#services"     className="hover:text-white transition-colors">Our Services</HashLink></li>
-                <li><HashLink smooth to="/#whyus"        className="hover:text-white transition-colors">Why us?</HashLink></li>
-                <li><HashLink smooth to="/#technologies" className="hover:text-white transition-colors">Technologies</HashLink></li>
+                <li><HashLink smooth to="/services"     className="hover:text-white transition-colors">Our Services</HashLink></li>
+                <li><HashLink smooth to="/#WhyUs"        className="hover:text-white transition-colors">Why us?</HashLink></li>
+                <li><HashLink smooth to="/#Technologies" className="hover:text-white transition-colors">Technologies</HashLink></li>
               </ul>
             </div>
 
