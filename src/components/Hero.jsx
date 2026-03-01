@@ -9,8 +9,8 @@ const Hero = () => {
         <h1 className="
           text-3xl sm:text-4xl md:text-5xl lg:text-[65px]
           font-light
-          leading-tight md:leading-[1.5]
-          mt-32 sm:mt-36 md:mt-44 lg:mt-48
+          leading-tight md:leading-normal
+          mt-30 sm:mt-36 md:mt-38 lg:mt-34
         ">
           We{" "}
           <span className="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
