@@ -5,9 +5,9 @@ import backgroundimg from "../assets/background.png";
 
 const Footer = () => {
   const socialLinks = [
-    { Icon: Instagram, href: "#", label: "Instagram" },
+    { Icon: Instagram, href: "https://www.instagram.com/floowstudios?igsh=MWdwdjYweHd3Mmx4OA%3D%3D&utm_source=qr", label: "Instagram" },
     { Icon: Facebook, href: "#", label: "Facebook" },
-    { Icon: Twitter, href: "#", label: "Twitter" },
+    
   ];
 
   return (
@@ -104,7 +104,7 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* ── CONTACT + SOCIAL (desktop) ────────────────────── */}
+            {/* ── CONTACT + SOCIAL  ────────────────────── */}
             <div className="flex flex-col items-center sm:items-start lg:items-start">
               <h3 className="font-semibold text-amber-50 mb-4 tracking-wide text-sm uppercase">
                 Contact
@@ -121,7 +121,6 @@ const Footer = () => {
                 </div>
               </div>
 
-              {/* Social icons — desktop only (lg+) */}
               <div className="hidden lg:flex gap-3 mt-6">
                 {socialLinks.map(({ Icon, href, label }) => (
                   <a
