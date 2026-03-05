@@ -1,34 +1,9 @@
 import questionImg from "../assets/question.png";
-import emailjs from "@emailjs/browser";
-import { useRef } from "react";
 import { FaUser, FaPhoneAlt, FaEnvelope, FaCommentDots } from "react-icons/fa";
 
 function Contact() {
 
-  const form = useRef();
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs.sendForm(
-      "service_a6uokzw",
-      "template_mho028i",
-      form.current,
-      "OCPLkG3vJ7zePyjJx"
-    )
-      .then(
-        () => {
-          alert("Message sent successfully!");
-          form.current.reset();
-        },
-        (error) => {
-          console.log(error);
-          alert("Failed to send message");
-        }
-      );
-  };
-
-  return (<div> <section className="py-24 px-4 sm:px-6">
+return ( <div> <section className="py-24 px-4 sm:px-6">
 
 
     <h2 className="text-4xl sm:text-5xl font-light text-center text-white mb-12 sm:mb-16">
@@ -50,10 +25,20 @@ function Contact() {
       <div className="w-full text-white md:ml-[260px] lg:ml-[320px]">
 
         <form
-          ref={form}
-          onSubmit={sendEmail}
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
           className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-10"
         >
+
+          {/* Hidden inputs for Netlify */}
+          <input type="hidden" name="form-name" value="contact" />
+          <p hidden>
+            <label>
+              Don’t fill this out: <input name="bot-field" />
+            </label>
+          </p>
 
           {/* Name */}
           <div>
@@ -62,7 +47,7 @@ function Contact() {
             </label>
             <input
               type="text"
-              name="user_name"
+              name="name"
               placeholder="Enter name"
               className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-2"
               required
@@ -76,7 +61,7 @@ function Contact() {
             </label>
             <input
               type="text"
-              name="user_phone"
+              name="phone"
               placeholder="Enter mobile number"
               className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-2"
               required
@@ -90,7 +75,7 @@ function Contact() {
             </label>
             <input
               type="email"
-              name="user_email"
+              name="email"
               placeholder="Enter email"
               className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-2"
               required
@@ -154,10 +139,10 @@ function Contact() {
       </div>
     </div>
   </section>
-  </div>
+</div>
 
 
-  );
+);
 }
 
 export default Contact;
