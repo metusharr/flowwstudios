@@ -3,7 +3,7 @@ import { FaUser, FaPhoneAlt, FaEnvelope, FaCommentDots } from "react-icons/fa";
 
 function Contact() {
 
-return ( <div> <section className="py-24 px-4 sm:px-6">
+  return (<div> <section className="py-24 px-4 sm:px-6">
 
 
     <h2 className="text-4xl sm:text-5xl font-light text-center text-white mb-12 sm:mb-16">
@@ -29,11 +29,13 @@ return ( <div> <section className="py-24 px-4 sm:px-6">
           method="POST"
           data-netlify="true"
           data-netlify-honeypot="bot-field"
+          action="/success"
           className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-10"
         >
 
           {/* Hidden inputs for Netlify */}
           <input type="hidden" name="form-name" value="contact" />
+
           <p hidden>
             <label>
               Don’t fill this out: <input name="bot-field" />
@@ -92,18 +94,10 @@ return ( <div> <section className="py-24 px-4 sm:px-6">
               name="service"
               className="appearance-none w-full bg-transparent border-b border-gray-500 group-hover:border-gray-300 focus:border-purple-400 outline-none py-3 pr-8 text-gray-300 transition duration-300"
             >
-              <option className="bg-black text-white">
-                Select your service
-              </option>
-              <option className="bg-black text-white">
-                Web Development
-              </option>
-              <option className="bg-black text-white">
-                UI/UX Design
-              </option>
-              <option className="bg-black text-white">
-                App Development
-              </option>
+              <option className="bg-black text-white">Select your service</option>
+              <option className="bg-black text-white">Web Development</option>
+              <option className="bg-black text-white">UI/UX Design</option>
+              <option className="bg-black text-white">App Development</option>
             </select>
 
             <span className="absolute right-0 top-10 text-gray-400 group-hover:text-purple-400 transition duration-300">
@@ -136,13 +130,14 @@ return ( <div> <section className="py-24 px-4 sm:px-6">
           </div>
 
         </form>
+
       </div>
     </div>
   </section>
-</div>
+  </div>
 
 
-);
+  );
 }
 
 export default Contact;
