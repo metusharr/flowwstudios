@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Phone, Menu, X } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -26,11 +27,10 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          scrolled
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled
             ? "bg-black/70 backdrop-blur-md border-b border-white/10"
             : "bg-transparent"
-        }`}
+          }`}
       >
         <div className="max-w-8xl mx-auto px-6 h-16 flex items-center justify-between">
 
@@ -44,8 +44,7 @@ const Navbar = () => {
           </Link>
 
           {/* DESKTOP MENU */}
-          <div className="hidden lg:flex items-center gap-4 text-sm">
-            <Link to="/" className={isActive("/")}>Home</Link>
+          <div className="hidden lg:flex items-center gap-4 text-sm absolute left-1/2 -translate-x-1/2">            <Link to="/" className={isActive("/")}>Home</Link>
             <span className="text-gray-500">•</span>
 
             <Link to="/about" className={isActive("/about")}>
@@ -64,15 +63,27 @@ const Navbar = () => {
           </div>
 
           {/* DESKTOP CTA */}
-          <a
-            href="https://wa.me/919773777618"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden lg:flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-full text-sm font-medium transition shadow-lg"
-          >
-            <Phone size={16} />
-            +91 9773777618
-          </a>
+          <div className="hidden lg:flex items-center gap-3">
+            <a
+              href="https://wa.me/919876543210"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-full text-sm font-medium transition shadow-lg"
+            >
+              <FaWhatsapp size={16} />
+              +91 9773777618
+            </a>
+
+            <a
+              href="https://wa.me/919773777618"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-full text-sm font-medium transition shadow-lg"
+            >
+              <Phone size={16} />
+              +91 8448276790
+            </a>
+          </div>
 
           {/* MOBILE MENU BUTTON */}
           <button
@@ -86,9 +97,8 @@ const Navbar = () => {
 
       {/* MOBILE MENU */}
       <div
-        className={`fixed top-16 left-0 w-full bg-black/95 backdrop-blur-md z-40 transform transition-all duration-300 ${
-          mobileOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
-        } lg:hidden`}
+        className={`fixed top-16 left-0 w-full bg-black/95 backdrop-blur-md z-40 transform transition-all duration-300 ${mobileOpen ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+          } lg:hidden`}
       >
         <div className="flex flex-col items-center gap-6 py-8 text-lg">
 

@@ -1,12 +1,13 @@
-import { Phone, Mail, Instagram, Facebook, Twitter } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Phone, Mail, Instagram, Facebook, Twitter, Linkedin } from "lucide-react";import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import backgroundimg from "../assets/background.png";
+import { FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   const socialLinks = [
     { Icon: Instagram, href: "https://www.instagram.com/floowstudios?igsh=MWdwdjYweHd3Mmx4OA%3D%3D&utm_source=qr", label: "Instagram" },
     { Icon: Facebook, href: "#", label: "Facebook" },
+  { Icon: Linkedin, href: "https://www.linkedin.com", label: "LinkedIn" },
     
   ];
 
@@ -112,8 +113,12 @@ const Footer = () => {
 
               <div className="space-y-3 text-gray-400 text-sm w-full">
                 <div className="flex items-center justify-center sm:justify-start gap-3">
-                  <Phone size={15} className="text-purple-400 shrink-0" />
+                  <FaWhatsapp size={15} className="text-purple-400 shrink-0" />
                   <span>+91 9773777618</span>
+                </div>
+                <div className="flex items-center justify-center sm:justify-start gap-3">
+                  <Phone size={15} className="text-purple-400 shrink-0" />
+                  <span>+91 8448276790</span>
                 </div>
                 <div className="flex items-start justify-center sm:justify-start gap-3">
                   <Mail size={15} className="text-purple-400 shrink-0 mt-0.5" />

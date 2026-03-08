@@ -107,7 +107,7 @@ const WhyUs = () => {
               key={item.id}
               src={item.image}
               alt={item.title}
-              className={`absolute inset-0 w-full h-full object-center  border-white rounded-3xl md:rounded-4xl p-3 sm:p-6 md:p-8 transition-opacity duration-700
+              className={`absolute inset-0 w-full h-full object-center      transition-opacity duration-700
               ${active === index ? "opacity-100" : "opacity-0"}`}
             />
           ))}
