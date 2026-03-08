@@ -7,7 +7,7 @@ const Footer = () => {
   const socialLinks = [
     { Icon: Instagram, href: "https://www.instagram.com/floowstudios?igsh=MWdwdjYweHd3Mmx4OA%3D%3D&utm_source=qr", label: "Instagram" },
     { Icon: Facebook, href: "#", label: "Facebook" },
-  { Icon: Linkedin, href: "https://www.linkedin.com", label: "LinkedIn" },
+  { Icon: Linkedin, href: "https://www.linkedin.com/company/floowstudios/posts/?feedView=all", label: "LinkedIn" },
     
   ];
 
