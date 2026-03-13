@@ -1,4 +1,4 @@
-import { Phone, Mail, Instagram, Facebook, Twitter, Linkedin } from "lucide-react";import { Link } from "react-router-dom";
+import { Phone, Mail, Instagram, Facebook, Twitter, Linkedin } from "lucide-react"; import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import backgroundimg from "../assets/background.png";
 import { FaWhatsapp } from "react-icons/fa";
@@ -7,8 +7,8 @@ const Footer = () => {
   const socialLinks = [
     { Icon: Instagram, href: "https://www.instagram.com/floowstudios?igsh=MWdwdjYweHd3Mmx4OA%3D%3D&utm_source=qr", label: "Instagram" },
     { Icon: Facebook, href: "#", label: "Facebook" },
-  { Icon: Linkedin, href: "https://www.linkedin.com/company/floowstudios/posts/?feedView=all", label: "LinkedIn" },
-    
+    { Icon: Linkedin, href: "https://www.linkedin.com/company/floowstudios/posts/?feedView=all", label: "LinkedIn" },
+
   ];
 
   return (
@@ -24,7 +24,7 @@ const Footer = () => {
         {/* Card */}
         <div className="bg-[#0b0b0e]/90 backdrop-blur-xl rounded-[1.75rem] sm:rounded-[2rem] md:rounded-[2.5rem] px-5 sm:px-8 md:px-10 lg:px-12 xl:px-14 py-8 sm:py-10 md:py-12">
 
-         
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-6 xl:gap-10">
 
             {/* ── LOGO & TAGLINE ─────────────────────────────────── */}
@@ -85,10 +85,10 @@ const Footer = () => {
               <ul className="space-y-2.5 text-gray-400 text-sm">
                 <li><Link to="/portfolio/fourth" className="hover:text-white transition-colors">Aatm Nurture</Link></li>
                 <li><Link to="/portfolio/second" className="hover:text-white transition-colors">IoT Dashboard</Link></li>
-                <li><Link to="/portfolio/fuel"   className="hover:text-white transition-colors">Fuel N Flavour</Link></li>
-                <li><Link to="/portfolio/third"  className="hover:text-white transition-colors">TrackIt</Link></li>
-                <li><Link to="/portfolio/fifth"  className="hover:text-white transition-colors">Starbucks</Link></li>
-                <li><Link to="/portfolio/sixth"  className="hover:text-white transition-colors">Downsyndrome</Link></li>
+                <li><Link to="/portfolio/fuel" className="hover:text-white transition-colors">Fuel N Flavour</Link></li>
+                <li><Link to="/portfolio/third" className="hover:text-white transition-colors">TrackIt</Link></li>
+                <li><Link to="/portfolio/fifth" className="hover:text-white transition-colors">Starbucks</Link></li>
+                <li><Link to="/portfolio/sixth" className="hover:text-white transition-colors">Downsyndrome</Link></li>
               </ul>
             </div>
 
@@ -99,8 +99,8 @@ const Footer = () => {
               </h3>
               <ul className="space-y-2.5 text-gray-400 text-sm">
                 <li><Link to="/about" className="hover:text-white transition-colors">About us</Link></li>
-                <li><HashLink smooth to="/services"     className="hover:text-white transition-colors">Our Services</HashLink></li>
-                <li><HashLink smooth to="/#WhyUs"        className="hover:text-white transition-colors">Why us?</HashLink></li>
+                <li><HashLink smooth to="/services" className="hover:text-white transition-colors">Our Services</HashLink></li>
+                <li><HashLink smooth to="/#WhyUs" className="hover:text-white transition-colors">Why us?</HashLink></li>
                 <li><HashLink smooth to="/#Technologies" className="hover:text-white transition-colors">Technologies</HashLink></li>
               </ul>
             </div>
@@ -111,7 +111,7 @@ const Footer = () => {
                 Contact
               </h3>
 
-              <div className="space-y-3 text-gray-400 text-sm w-full">
+              <div className="space-y-3 text-gray-400 text-sm lg:text-xs w-full">
                 <div className="flex items-center justify-center sm:justify-start gap-3">
                   <FaWhatsapp size={15} className="text-purple-400 shrink-0" />
                   <span>+91 9773777618</span>
@@ -122,7 +122,12 @@ const Footer = () => {
                 </div>
                 <div className="flex items-start justify-center sm:justify-start gap-3">
                   <Mail size={15} className="text-purple-400 shrink-0 mt-0.5" />
-                  <span className="break-all">contact@floowstudios.com</span>
+                  <a
+                    href="mailto:contact@floowstudios.com"
+                    className="whitespace-nowrap text-gray-400 hover:text-purple-400 transition-colors duration-300"
+                  >
+                    contact@floowstudios.com
+                  </a>
                 </div>
               </div>
 
@@ -142,7 +147,7 @@ const Footer = () => {
 
           </div>
 
-          
+
 
         </div>
       </div>
