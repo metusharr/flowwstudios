@@ -1,44 +1,51 @@
-import { Phone, Mail, Instagram, Facebook, Twitter, Linkedin } from "lucide-react"; import { Link } from "react-router-dom";
+import { Phone, Mail, Instagram, Facebook, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import backgroundimg from "../assets/background.png";
 import { FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   const socialLinks = [
-    { Icon: Instagram, href: "https://www.instagram.com/floowstudios?igsh=MWdwdjYweHd3Mmx4OA%3D%3D&utm_source=qr", label: "Instagram" },
+    {
+      Icon: Instagram,
+      href: "https://www.instagram.com/floowstudios?igsh=MWdwdjYweHd3Mmx4OA%3D%3D&utm_source=qr",
+      label: "Instagram",
+    },
     { Icon: Facebook, href: "#", label: "Facebook" },
-    { Icon: Linkedin, href: "https://www.linkedin.com/company/floowstudios/posts/?feedView=all", label: "LinkedIn" },
-
+    {
+      Icon: Linkedin,
+      href: "https://www.linkedin.com/company/floowstudios/posts/?feedView=all",
+      label: "LinkedIn",
+    },
   ];
 
   return (
     <footer
-      className="relative bg-repeat  bg-cover"
+      className="relative bg-repeat bg-cover"
       style={{
         backgroundImage: `url(${backgroundimg})`,
         backgroundPosition: "center -3000px",
       }}
     >
       <div className="w-full px-3 sm:px-5 md:px-8 lg:px-10 xl:px-14 py-6 sm:py-8 md:py-10">
-
         {/* Card */}
         <div className="bg-[#0b0b0e]/90 backdrop-blur-xl rounded-[1.75rem] sm:rounded-[2rem] md:rounded-[2.5rem] px-5 sm:px-8 md:px-10 lg:px-12 xl:px-14 py-8 sm:py-10 md:py-12">
-
-
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-6 xl:gap-10">
 
-            {/* ── LOGO & TAGLINE ─────────────────────────────────── */}
-            <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-center sm:items-start">
+            {/* LOGO */}
+            <div className="sm:col-span-2 lg:col-span-1 flex flex-col items-start">
               <img
                 src="/logo.png"
                 alt="Flow Studios"
                 className="h-14 sm:h-16 mb-4 sm:mb-6"
               />
-              <p className="text-gray-400 text-sm leading-relaxed text-center sm:text-left max-w-[260px]">
+
+              <p className="text-gray-400 text-sm leading-relaxed text-left max-w-[260px]">
                 Turn your ideas into powerful, modern digital brand experiences.
               </p>
 
-              {/* Social icons shown here on mobile only (below tagline) */}
+              {/* Mobile social icons */}
               <div className="flex gap-3 mt-6 lg:hidden">
                 {socialLinks.map(({ Icon, href, label }) => (
                   <a
@@ -53,22 +60,25 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* ── INFORMATION ───────────────────────────────────── */}
-            <div className="flex flex-col items-center sm:items-start">
+            {/* INFORMATION */}
+            <div className="flex flex-col items-start">
               <h3 className="font-semibold text-amber-50 mb-4 tracking-wide text-sm uppercase">
                 Information
               </h3>
+
               <ul className="space-y-2.5 text-gray-400 text-sm">
                 <li>
                   <HashLink smooth to="/#reviews" className="hover:text-white transition-colors">
                     Reviews
                   </HashLink>
                 </li>
+
                 <li>
                   <HashLink smooth to="/#faq" className="hover:text-white transition-colors">
                     FAQ's
                   </HashLink>
                 </li>
+
                 <li>
                   <HashLink smooth to="/contact" className="hover:text-white transition-colors">
                     Get in touch
@@ -77,11 +87,12 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* ── PORTFOLIO ─────────────────────────────────────── */}
-            <div className="flex flex-col items-center sm:items-start">
+            {/* PORTFOLIO */}
+            <div className="flex flex-col items-start">
               <h3 className="font-semibold text-amber-50 mb-4 tracking-wide text-sm uppercase">
                 Our Portfolio
               </h3>
+
               <ul className="space-y-2.5 text-gray-400 text-sm">
                 <li><Link to="/portfolio/fourth" className="hover:text-white transition-colors">Aatm Nurture</Link></li>
                 <li><Link to="/portfolio/second" className="hover:text-white transition-colors">IoT Dashboard</Link></li>
@@ -92,11 +103,12 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* ── COMPANY ───────────────────────────────────────── */}
-            <div className="flex flex-col items-center sm:items-start">
+            {/* COMPANY */}
+            <div className="flex flex-col items-start">
               <h3 className="font-semibold text-amber-50 mb-4 tracking-wide text-sm uppercase">
                 Company
               </h3>
+
               <ul className="space-y-2.5 text-gray-400 text-sm">
                 <li><Link to="/about" className="hover:text-white transition-colors">About us</Link></li>
                 <li><HashLink smooth to="/services" className="hover:text-white transition-colors">Our Services</HashLink></li>
@@ -105,22 +117,25 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* ── CONTACT + SOCIAL  ────────────────────── */}
-            <div className="flex flex-col items-center sm:items-start lg:items-start">
+            {/* CONTACT */}
+            <div className="flex flex-col items-start">
               <h3 className="font-semibold text-amber-50 mb-4 tracking-wide text-sm uppercase">
                 Contact
               </h3>
 
               <div className="space-y-3 text-gray-400 text-sm lg:text-xs w-full">
-                <div className="flex items-center justify-center sm:justify-start gap-3">
+
+                <div className="flex items-center justify-start gap-3">
                   <FaWhatsapp size={15} className="text-purple-400 shrink-0" />
                   <span>+91 9773777618</span>
                 </div>
-                <div className="flex items-center justify-center sm:justify-start gap-3">
+
+                <div className="flex items-center justify-start gap-3">
                   <Phone size={15} className="text-purple-400 shrink-0" />
                   <span>+91 8448276790</span>
                 </div>
-                <div className="flex items-start justify-center sm:justify-start gap-3">
+
+                <div className="flex items-start justify-start gap-3">
                   <Mail size={15} className="text-purple-400 shrink-0 mt-0.5" />
                   <a
                     href="mailto:contact@floowstudios.com"
@@ -129,8 +144,10 @@ const Footer = () => {
                     contact@floowstudios.com
                   </a>
                 </div>
+
               </div>
 
+              {/* Desktop social icons */}
               <div className="hidden lg:flex gap-3 mt-6">
                 {socialLinks.map(({ Icon, href, label }) => (
                   <a
@@ -143,12 +160,10 @@ const Footer = () => {
                   </a>
                 ))}
               </div>
+
             </div>
 
           </div>
-
-
-
         </div>
       </div>
     </footer>
