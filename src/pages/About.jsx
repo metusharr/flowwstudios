@@ -68,7 +68,7 @@ const AboutHero = () => {
             <img
               src={rightImage}
               alt="UI Showcase"
-              className="w-full max-w-[500px] lg:w-4xl lg:max-w-[1100px] object-contain translate-x-0 lg:translate-x-10"
+              className="w-full max-w-[500px] lg:w-[700px] lg:max-w-[1100px] object-contain translate-x-0 lg:translate-x-10"
             />
           </div>
 
