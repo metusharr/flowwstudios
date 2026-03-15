@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden text-white">
@@ -39,27 +41,31 @@ const Hero = () => {
 
         {/* CTA */}
         <div className="mt-8 sm:mt-10 flex justify-center">
-          <button className="
-            flex items-center gap-2
-            bg-white text-black
-            px-4 sm:px-5 md:px-6
-            py-2 sm:py-2.5
-            rounded-xl font-medium
-            hover:scale-105 transition
-            text-sm sm:text-base
-          ">
-            <span>
-              <img
-                src="/star.png"
-                alt="Floww Studios Logo"
-                className="h-8 sm:h-10 md:h-12 w-auto object-contain"
-              />
-            </span>
-            Schedule a call ▶
-          </button>
+          <Link to="/contact">
+            <button
+              className="
+        flex items-center gap-2
+        bg-white text-black
+        px-4 sm:px-5 md:px-6
+        py-2 sm:py-2.5
+        rounded-xl font-medium
+        hover:scale-105 transition
+        text-sm sm:text-base
+      "
+            >
+              <span>
+                <img
+                  src="/star.png"
+                  alt="Floww Studios Logo"
+                  className="h-8 sm:h-10 md:h-12 w-auto object-contain"
+                />
+              </span>
+              Contact Us ▶
+            </button>
+          </Link>
         </div>
 
-        
+
 
       </div>
     </section>

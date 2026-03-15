@@ -1,4 +1,5 @@
 import React from "react";
+
 import backgroundimg from "../assets/background.png";
 import NewNavbar from "../components/Navbar";
 import Hero from "../components/Hero";
