@@ -167,7 +167,7 @@ const portfolios = [
 
         socialMedia: [],
         uiux: [
-            "/portfolioimages/downsyndrome/banner3.webp",
+            "/portfolioimages/downsyndrome/banner3.png",
 
         ],
 
