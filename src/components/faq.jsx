@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import AnimatedSection from "./AnimatedSection";
 
 const faqs = [
   {
@@ -26,84 +28,119 @@ const faqs = [
     answer:
       "We work with startups, small businesses, and established brands across various industries. Our team adapts to your specific business needs to deliver customized digital solutions.",
   },
-  
 ];
 
 const FAQ = () => {
-  const [active, setActive] = useState(); // second item open by default
+  const [active, setActive] = useState(null);
+
+  // stagger
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
 
   return (
-    <section id="faq" className=" py-24 overflow-hidden text-white">
+    <AnimatedSection>
+      <section id="faq" className="py-24 overflow-hidden text-white">
 
-      {/* HEADER */}
-      <div className="text-center mb-16 px-6">
-        <p className="text-purple-400 font-semibold text-2xl mb-3">
-          FAQ's
-        </p>
+        {/* HEADER */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16 px-6"
+        >
+          <p className="text-purple-400 font-semibold text-2xl mb-3">
+            FAQ's
+          </p>
 
-        <h2 className="text-4xl md:text-4xl font-light leading-tight">
-          Quick Answers to Common <br />
-          Questions
-        </h2>
-      </div>
+          <h2 className="text-4xl md:text-4xl font-light leading-tight">
+            Quick Answers to Common <br />
+            Questions
+          </h2>
+        </motion.div>
 
-      {/* FAQ LIST */}
-      <div className="max-w-4xl mx-auto px-6 space-y-6">
+        {/* FAQ LIST */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          className="max-w-4xl mx-auto px-6 space-y-6"
+        >
+          {faqs.map((faq, index) => {
+            const isOpen = active === index;
 
-        {faqs.map((faq, index) => {
-          const isOpen = active === index;
-
-          return (
-            <div
-              key={index}
-              className={`group relative bg-white/5 backdrop-blur-xl 
-                         border border-white/10 rounded-2xl 
-                         shadow-[0_8px_30px_rgba(0,0,0,0.25)]
-                         transition-all duration-300
-                         ${isOpen ? "bg-white/10 border-purple-500/30" : ""}`}
-            >
-              {/* QUESTION */}
-              <button
-                onClick={() => setActive(isOpen ? null : index)}
-                className="w-full flex items-center justify-between 
-                           px-6 md:px-8 py-5 md:py-6 
-                           text-left"
+            return (
+              <motion.div
+                key={index}
+                variants={fadeUp}
+                className={`group relative bg-white/5 backdrop-blur-xl 
+                           border border-white/10 rounded-2xl 
+                           shadow-[0_8px_30px_rgba(0,0,0,0.25)]
+                           transition-all duration-300
+                           ${isOpen ? "bg-white/10 border-purple-500/30" : ""}`}
               >
-                <span
-                  className={`text-sm md:text-base font-medium transition-colors
-                  ${isOpen ? "text-purple-400" : "text-white"}`}
+                {/* QUESTION */}
+                <button
+                  onClick={() => setActive(isOpen ? null : index)}
+                  className="w-full flex items-center justify-between 
+                             px-6 md:px-8 py-5 md:py-6 
+                             text-left"
                 >
-                  {faq.question}
-                </span>
+                  <span
+                    className={`text-sm md:text-base font-medium transition-colors
+                    ${isOpen ? "text-purple-400" : "text-white"}`}
+                  >
+                    {faq.question}
+                  </span>
 
-                {/* ICON */}
-                <span
-                  className={`text-2xl transition-transform font-extralight duration-300
-                  ${isOpen ? "rotate-45 text-purple-400" : "text-white"}`}
-                >
-                  +
-                </span>
-              </button>
+                  {/* ICON */}
+                  <motion.span
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.3 }}
+                    className={`text-2xl font-extralight
+                    ${isOpen ? "text-purple-400" : "text-white"}`}
+                  >
+                    +
+                  </motion.span>
+                </button>
 
-              {/* ANSWER */}
-              <div
-                className={`grid transition-all duration-500 ease-in-out
-                ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
-              >
-                <div className="overflow-hidden">
-                  <p className="px-6 md:px-8 pb-6 text-sm text-gray-300 leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+                {/* ANSWER */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="px-6 md:px-8 pb-6 text-sm text-gray-300 leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
-      </div>
-
-      
-    </section>
+      </section>
+    </AnimatedSection>
   );
 };
 

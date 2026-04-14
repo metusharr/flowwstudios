@@ -1,6 +1,7 @@
 import questionImg from "../assets/question.png";
 import { FaUser, FaPhoneAlt, FaEnvelope, FaCommentDots } from "react-icons/fa";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Contact() {
 
@@ -9,7 +10,6 @@ const [success, setSuccess] = useState(false);
 
 const handleSubmit = (e) => {
 e.preventDefault();
-
 
 setLoading(true);
 
@@ -35,145 +35,197 @@ fetch("/", {
     setLoading(false);
   });
 
-
 };
 
-return ( <div> <section className="py-24 px-4 sm:px-6">
+return (
+<div>
 
-```
-    <h2 className="text-4xl sm:text-5xl font-light text-center text-white mb-12 sm:mb-16">
-      Get in <span className="text-purple-400 font-medium">Touch</span>
-    </h2>
+<section className="py-24 px-4 sm:px-6">
 
-    <div className="relative w-full max-w-7xl mx-auto bg-white/10 backdrop-blur border border-white/20 rounded-3xl px-6 sm:px-10 pt-14 pb-10 flex items-center shadow-2xl overflow-hidden">
+  {/* HEADING */}
+  <motion.h2
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="text-4xl sm:text-5xl font-light text-center text-white mb-12 sm:mb-16"
+  >
+    Get in <span className="text-purple-400 font-medium">Touch</span>
+  </motion.h2>
 
-      {/* Image */}
-      <div className="md:flex justify-center hidden mb-10 md:absolute md:-left-10 md:mb-0">
-        <img
-          src={questionImg}
-          alt="Question"
-          className="w-[220px] sm:w-[280px] md:w-[360px] drop-shadow-2xl"
-        />
-      </div>
+  <motion.div
+    initial={{ opacity: 0, y: 80 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.7 }}
+    className="relative w-full max-w-7xl mx-auto bg-white/10 backdrop-blur border border-white/20 rounded-3xl px-6 sm:px-10 pt-14 pb-10 flex items-center shadow-2xl overflow-hidden"
+  >
 
-      <div className="w-full text-white md:ml-[260px] lg:ml-[320px]">
+    {/* Image */}
+    <motion.div
+      initial={{ opacity: 0, x: -80 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.7 }}
+      className="md:flex justify-center hidden mb-10 md:absolute md:-left-10 md:mb-0"
+    >
+      <img
+        src={questionImg}
+        alt="Question"
+        className="w-[220px] sm:w-[280px] md:w-[360px] drop-shadow-2xl"
+      />
+    </motion.div>
 
-        <form
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          data-netlify-honeypot="bot-field"
-          onSubmit={handleSubmit}
-          className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-10"
+    <div className="w-full text-white md:ml-[260px] lg:ml-[320px]">
+
+      <form
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-10"
+      >
+
+        <input type="hidden" name="form-name" value="contact" />
+
+        <p hidden>
+          <label>
+            Don’t fill this out: <input name="bot-field" />
+          </label>
+        </p>
+
+        {/* Name */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
         >
+          <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
+            <FaUser /> Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter name"
+            className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-2"
+            required
+          />
+        </motion.div>
 
-          <input type="hidden" name="form-name" value="contact" />
+        {/* Phone */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
+            <FaPhoneAlt /> Mobile number
+          </label>
+          <input
+            type="text"
+            name="phone"
+            placeholder="Enter mobile number"
+            className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-2"
+            required
+          />
+        </motion.div>
 
-          {/* Honeypot spam protection */}
-          <p hidden>
-            <label>
-              Don’t fill this out: <input name="bot-field" />
-            </label>
-          </p>
+        {/* Email */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
+            <FaEnvelope /> Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-2"
+            required
+          />
+        </motion.div>
 
-          {/* Name */}
-          <div>
-            <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
-              <FaUser /> Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter name"
-              className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-2"
-              required
-            />
-          </div>
+        {/* Service */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="relative group"
+        >
+          <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
+            <FaUser /> Select service
+          </label>
 
-          {/* Phone */}
-          <div>
-            <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
-              <FaPhoneAlt /> Mobile number
-            </label>
-            <input
-              type="text"
-              name="phone"
-              placeholder="Enter mobile number"
-              className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-2"
-              required
-            />
-          </div>
+          <select
+            name="service"
+            className="appearance-none w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-3 text-gray-300"
+          >
+            <option className="bg-black">Web Development</option>
+            <option className="bg-black">UI/UX Design</option>
+            <option className="bg-black">App Development</option>
+          </select>
+        </motion.div>
 
-          {/* Email */}
-          <div>
-            <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
-              <FaEnvelope /> Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter email"
-              className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-2"
-              required
-            />
-          </div>
+        {/* Message */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="md:col-span-2"
+        >
+          <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
+            <FaCommentDots /> Message
+          </label>
+          <textarea
+            name="message"
+            rows="2"
+            placeholder="Write your message here"
+            className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none"
+            required
+          ></textarea>
+        </motion.div>
 
-          {/* Service */}
-          <div className="relative group">
-            <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
-              <FaUser /> Select service
-            </label>
+        {/* Button */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-4"
+        >
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            type="submit"
+            disabled={loading}
+            className="flex items-center gap-2 bg-white text-purple-600 px-6 py-3 rounded-full font-medium shadow-lg hover:scale-105 transition"
+          >
+            {loading ? "Sending..." : "Send message"}
+          </motion.button>
+        </motion.div>
 
-            <select
-              name="service"
-              className="appearance-none w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none py-3 text-gray-300"
-            >
-              <option className="bg-black">Web Development</option>
-              <option className="bg-black">UI/UX Design</option>
-              <option className="bg-black">App Development</option>
-            </select>
-          </div>
+      </form>
 
-          {/* Message */}
-          <div className="md:col-span-2">
-            <label className="flex items-center gap-2 text-sm text-gray-300 mb-2">
-              <FaCommentDots /> Message
-            </label>
-            <textarea
-              name="message"
-              rows="2"
-              placeholder="Write your message here"
-              className="w-full bg-transparent border-b border-gray-500 focus:border-purple-400 outline-none"
-              required
-            ></textarea>
-          </div>
-
-          {/* Button */}
-          <div className="mt-4">
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex items-center gap-2 bg-white text-purple-600 px-6 py-3 rounded-full font-medium shadow-lg hover:scale-105 transition"
-            >
-              {loading ? "Sending..." : "Send message"}
-            </button>
-          </div>
-
-        </form>
-
-        {/* Success Popup */}
+      {/* SUCCESS POPUP */}
+      <AnimatePresence>
         {success && (
-          <div className="fixed top-6 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg animate-bounce">
+          <motion.div
+            initial={{ opacity: 0, y: -40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -40 }}
+            className="fixed top-6 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg"
+          >
             🎉 Message sent successfully!
-          </div>
+          </motion.div>
         )}
+      </AnimatePresence>
 
-      </div>
     </div>
-  </section>
+  </motion.div>
+
+</section>
+
 </div>
-
-
 );
 }
 

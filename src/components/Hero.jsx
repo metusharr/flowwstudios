@@ -1,55 +1,103 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Hero = () => {
+
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 60 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.1, 0.25, 1]
+      }
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden text-white">
 
-      {/* CONTENT */}
-      <div className="relative z-10 w-full max-w-[1600px] md:mb-22 text-center px-4 sm:px-6 md:px-8">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="relative z-10 w-full max-w-[1600px] md:mb-22 text-center px-4 sm:px-6 md:px-8"
+      >
 
         {/* HEADING */}
-        <h1 className="
+        <motion.h1
+          variants={fadeUp}
+          className="
           text-3xl sm:text-4xl md:text-5xl lg:text-[65px]
           font-light
           leading-tight md:leading-normal
           mt-30 sm:mt-36 md:mt-38 lg:mt-34
-        ">
+        "
+        >
           We{" "}
-          <span className="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent"
+          >
             design
-          </span>
+          </motion.span>
           , build, and{" "}
-          <span className="bg-gradient-to-r from-yellow-400 to-purple-600 bg-clip-text text-transparent">
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+            className="bg-gradient-to-r from-yellow-400 to-purple-600 bg-clip-text text-transparent"
+          >
             elevate
-          </span>
+          </motion.span>
           <br className="hidden sm:block" />
           digital brands.
-        </h1>
+        </motion.h1>
 
         {/* PARAGRAPH */}
-        <p className="
+        <motion.p
+          variants={fadeUp}
+          className="
           mt-6
           text-sm sm:text-base md:text-lg
           font-light text-gray-300
           max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-4xl
           mx-auto px-2
-        ">
+        "
+        >
           Built by a young team that brings new perspectives, bold creativity,
           and a forward-thinking approach to designing and building digital
           brands that stand out.
-        </p>
+        </motion.p>
 
         {/* CTA */}
-        <div className="mt-8 sm:mt-10 flex justify-center">
+        <motion.div
+          variants={fadeUp}
+          className="mt-8 sm:mt-10 flex justify-center"
+        >
           <Link to="/contact">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.95 }}
               className="
         flex items-center gap-2
         bg-white text-black
         px-4 sm:px-5 md:px-6
         py-2 sm:py-2.5
         rounded-xl font-medium
-        hover:scale-105 transition
         text-sm sm:text-base
       "
             >
@@ -61,13 +109,11 @@ const Hero = () => {
                 />
               </span>
               Contact Us ▶
-            </button>
+            </motion.button>
           </Link>
-        </div>
+        </motion.div>
 
-
-
-      </div>
+      </motion.div>
     </section>
   );
 };
