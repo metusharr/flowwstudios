@@ -61,7 +61,7 @@ const Portfolio = () => {
               className="text-purple-400 text-lg sm:text-2xl md:text-4xl mt-[-15px] sm:mt-[-30px] md:mt-[-70px] text-center md:self-end md:mr-[18%] md:text-right"
               style={{ fontFamily: "splash" }}
             >
-              Flow Studios
+              Floow Studios
             </motion.p>
           </div>
 
