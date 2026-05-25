@@ -290,7 +290,7 @@ const AboutHero = () => {
         <div className="overflow-hidden">
 
           <img
-            src="/gurleen.png"
+            src="/gurleen.jpeg"
             alt="Gurleen"
             className="w-full h-[420px] object-cover transition duration-700 group-hover:scale-110"
           />
