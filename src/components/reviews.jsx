@@ -575,7 +575,7 @@ const CustomerReviews = () => {
     }
   };
 
-  // Mobile View - Beautiful & Clean
+  // Mobile View 
   if (isMobile) {
     return (
       <AnimatedSection>

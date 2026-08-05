@@ -131,6 +131,11 @@ const Footer = () => {
                 </div>
 
                 <div className="flex items-center justify-start gap-3">
+                  <FaWhatsapp size={15} className="text-purple-400 shrink-0" />
+                  <span>+1 843-287-5990</span>
+                </div>
+
+                <div className="flex items-center justify-start gap-3">
                   <Phone size={15} className="text-purple-400 shrink-0" />
                   <span>+91 8448276790</span>
                 </div>
