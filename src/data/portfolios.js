@@ -108,7 +108,7 @@ const portfolios = [
       "/portfolioimages/aatmNurture/banner3.webp",
     ],
 
-    websiteUrl: "aatmnurture.in",
+    websiteUrl: "https://aatmnurture.in",
   },
 
   {
