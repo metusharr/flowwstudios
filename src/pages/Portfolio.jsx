@@ -4,6 +4,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -14,15 +15,50 @@ import ballImg from "../assets/portfolio-o.png";
 
 import NewNavbar from "../components/Navbar";
 
-const AUTO_PLAY_TIME = 2000;
+const AUTO_PLAY_TIME = 4000;
 
 const Portfolio = () => {
+  /* =========================================================
+     STATE
+  ========================================================= */
+
   const [activeIndex, setActiveIndex] = useState(0);
+
   const [isHovered, setIsHovered] = useState(false);
+
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return window.innerWidth >= 768;
+  });
 
   const autoplayRef = useRef(null);
 
   const total = portfolios?.length || 0;
+
+  /* =========================================================
+     RESPONSIVE CHECK
+     Desktop = 768px+
+  ========================================================= */
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+    };
+  }, []);
 
   /* =========================================================
      NEXT SLIDE
@@ -44,19 +80,52 @@ const Portfolio = () => {
     if (!total) return;
 
     setActiveIndex((current) => {
-      return (current - 1 + total) % total;
+      return (
+        (current - 1 + total) % total
+      );
     });
   }, [total]);
 
   /* =========================================================
-     AUTOPLAY
+     DESKTOP AUTOPLAY ONLY
   ========================================================= */
 
   useEffect(() => {
+    /*
+      IMPORTANT:
+
+      Mobile:
+      < 768px
+
+      Autoplay completely disabled.
+    */
+
+    if (!isDesktop) {
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current);
+
+        autoplayRef.current = null;
+      }
+
+      return;
+    }
+
+    /*
+      Clear previous interval before
+      creating a new one.
+    */
+
     if (autoplayRef.current) {
       clearInterval(autoplayRef.current);
+
       autoplayRef.current = null;
     }
+
+    /*
+      Don't autoplay when:
+      - mouse is hovering
+      - only one project exists
+    */
 
     if (isHovered || total <= 1) {
       return;
@@ -71,10 +140,15 @@ const Portfolio = () => {
     return () => {
       if (autoplayRef.current) {
         clearInterval(autoplayRef.current);
+
         autoplayRef.current = null;
       }
     };
-  }, [isHovered, total]);
+  }, [
+    isDesktop,
+    isHovered,
+    total,
+  ]);
 
   /* =========================================================
      KEYBOARD CONTROLS
@@ -91,7 +165,10 @@ const Portfolio = () => {
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
 
     return () => {
       window.removeEventListener(
@@ -99,14 +176,18 @@ const Portfolio = () => {
         handleKeyDown
       );
     };
-  }, [nextSlide, previousSlide]);
+  }, [
+    nextSlide,
+    previousSlide,
+  ]);
 
   /* =========================================================
      GET CARD POSITION
   ========================================================= */
 
   const getPosition = (index) => {
-    let position = index - activeIndex;
+    let position =
+      index - activeIndex;
 
     if (position > total / 2) {
       position -= total;
@@ -123,8 +204,12 @@ const Portfolio = () => {
      CARD ANIMATION
   ========================================================= */
 
-  const getCardAnimation = (position) => {
-    /* CENTER */
+  const getCardAnimation = (
+    position
+  ) => {
+    /*
+      CENTER CARD
+    */
 
     if (position === 0) {
       return {
@@ -138,47 +223,103 @@ const Portfolio = () => {
       };
     }
 
-    /* LEFT / RIGHT */
+    /*
+      LEFT / RIGHT
+    */
 
-    if (position === -1 || position === 1) {
+    if (
+      position === -1 ||
+      position === 1
+    ) {
       return {
-        x: `calc(-50% + ${position * 300}px)`,
+        x: `calc(-50% + ${
+          position * 300
+        }px)`,
+
         y: "calc(-50% + 18px)",
+
         scale: 0.88,
-        rotateY: position === -1 ? 8 : -8,
-        rotateZ: position === -1 ? -1 : 1,
+
+        rotateY:
+          position === -1
+            ? 8
+            : -8,
+
+        rotateZ:
+          position === -1
+            ? -1
+            : 1,
+
         opacity: 0.78,
+
         filter: "blur(0px)",
       };
     }
 
-    /* FAR LEFT / FAR RIGHT */
+    /*
+      FAR LEFT / FAR RIGHT
+    */
 
-    if (position === -2 || position === 2) {
+    if (
+      position === -2 ||
+      position === 2
+    ) {
       return {
-        x: `calc(-50% + ${position * 300}px)`,
+        x: `calc(-50% + ${
+          position * 300
+        }px)`,
+
         y: "calc(-50% + 42px)",
+
         scale: 0.75,
-        rotateY: position === -2 ? 13 : -13,
-        rotateZ: position === -2 ? -2 : 2,
+
+        rotateY:
+          position === -2
+            ? 13
+            : -13,
+
+        rotateZ:
+          position === -2
+            ? -2
+            : 2,
+
         opacity: 0.48,
+
         filter: "blur(0.5px)",
       };
     }
 
+    /*
+      HIDDEN CARDS
+    */
+
     return {
-      x: `calc(-50% + ${position * 350}px)`,
+      x: `calc(-50% + ${
+        position * 350
+      }px)`,
+
       y: "calc(-50% + 60px)",
+
       scale: 0.65,
-      rotateY: position < 0 ? 18 : -18,
-      rotateZ: position < 0 ? -3 : 3,
+
+      rotateY:
+        position < 0
+          ? 18
+          : -18,
+
+      rotateZ:
+        position < 0
+          ? -3
+          : 3,
+
       opacity: 0,
+
       filter: "blur(3px)",
     };
   };
 
   /* =========================================================
-     EMPTY DATA
+     NO PORTFOLIO DATA
   ========================================================= */
 
   if (!total) {
@@ -207,16 +348,30 @@ const Portfolio = () => {
       }}
     >
       {/* =====================================================
-          BACKGROUND OVERLAY
+          DARK OVERLAY
       ===================================================== */}
-
-      <div className="fixed inset-0 bg-black/35 pointer-events-none z-0" />
-
-      {/* AMBIENT GLOW */}
 
       <div
         className="
           fixed
+          inset-0
+
+          bg-black/35
+
+          pointer-events-none
+
+          z-0
+        "
+      />
+
+      {/* =====================================================
+          AMBIENT GLOW
+      ===================================================== */}
+
+      <div
+        className="
+          fixed
+
           left-1/2
           top-[42%]
 
@@ -239,6 +394,7 @@ const Portfolio = () => {
       <div
         className="
           fixed
+
           left-1/2
           top-[65%]
 
@@ -316,7 +472,9 @@ const Portfolio = () => {
           Our
         </motion.p>
 
-        {/* TITLE */}
+        {/* ===================================================
+            TITLE
+        =================================================== */}
 
         <div className="flex flex-col items-center">
           <motion.h1
@@ -332,7 +490,12 @@ const Portfolio = () => {
             }}
             transition={{
               duration: 0.9,
-              ease: [0.22, 1, 0.36, 1],
+              ease: [
+                0.22,
+                1,
+                0.36,
+                1,
+              ],
             }}
             className="
               text-[42px]
@@ -389,7 +552,9 @@ const Portfolio = () => {
             LIO
           </motion.h1>
 
-          {/* SUBTITLE */}
+          {/* =================================================
+              SUBTITLE
+          ================================================= */}
 
           <motion.p
             initial={{
@@ -430,7 +595,9 @@ const Portfolio = () => {
           </motion.p>
         </div>
 
-        {/* CTA */}
+        {/* =================================================
+            CTA
+        ================================================= */}
 
         <motion.div
           initial={{
@@ -527,7 +694,9 @@ const Portfolio = () => {
           </motion.button>
         </motion.div>
 
-        {/* TAGLINE */}
+        {/* =================================================
+            TAGLINE
+        ================================================= */}
 
         <motion.div
           initial={{
@@ -593,7 +762,7 @@ const Portfolio = () => {
       </section>
 
       {/* =====================================================
-          PORTFOLIO CAROUSEL
+          PORTFOLIO SECTION
       ===================================================== */}
 
       <section
@@ -608,7 +777,9 @@ const Portfolio = () => {
           md:pb-40
         "
       >
-        {/* SECTION LABEL */}
+        {/* ===================================================
+            SECTION LABEL
+        =================================================== */}
 
         <motion.div
           initial={{
@@ -663,9 +834,7 @@ const Portfolio = () => {
         </motion.div>
 
         {/* ===================================================
-            CAROUSEL AREA
-
-            Hover ONLY pauses the cards
+            CAROUSEL
         =================================================== */}
 
         <div
@@ -682,14 +851,28 @@ const Portfolio = () => {
 
             [perspective:1800px]
           "
+          /*
+            Desktop:
+            Hover pauses autoplay.
+
+            Mobile:
+            isDesktop false, so autoplay
+            is already disabled.
+          */
           onMouseEnter={() => {
-            setIsHovered(true);
+            if (isDesktop) {
+              setIsHovered(true);
+            }
           }}
           onMouseLeave={() => {
-            setIsHovered(false);
+            if (isDesktop) {
+              setIsHovered(false);
+            }
           }}
         >
-          {/* FLOOR GLOW */}
+          {/* =================================================
+              FLOOR GLOW
+          ================================================= */}
 
           <div
             className="
@@ -753,284 +936,263 @@ const Portfolio = () => {
               justify-center
             "
           >
-            {portfolios.map((item, index) => {
-              const position = getPosition(index);
+            {portfolios.map(
+              (item, index) => {
+                const position =
+                  getPosition(index);
 
-              // Only show 5 cards
-              if (Math.abs(position) > 2) {
-                return null;
-              }
+                /*
+                  Only render 5 visible cards
+                */
 
-              const isActive = position === 0;
+                if (
+                  Math.abs(position) > 2
+                ) {
+                  return null;
+                }
 
-              return (
-                <motion.div
-                  key={item.id}
-                  className="
-                    absolute
+                const isActive =
+                  position === 0;
 
-                    left-1/2
-                    top-1/2
-
-                    will-change-transform
-                  "
-                  initial={false}
-                  animate={getCardAnimation(position)}
-                  transition={{
-                    type: "spring",
-                    stiffness: 145,
-                    damping: 24,
-                    mass: 0.9,
-                  }}
-                  style={{
-                    zIndex:
-                      50 - Math.abs(position),
-
-                    transformStyle:
-                      "preserve-3d",
-                  }}
-                  drag={isActive ? "x" : false}
-                  dragConstraints={{
-                    left: 0,
-                    right: 0,
-                  }}
-                  dragElastic={0.12}
-                  onDragEnd={(event, info) => {
-                    if (
-                      Math.abs(info.offset.x) >
-                      70
-                    ) {
-                      if (info.offset.x > 0) {
-                        previousSlide();
-                      } else {
-                        nextSlide();
-                      }
-                    }
-                  }}
-                >
-                  <motion.article
-                    whileHover={
-                      isActive
-                        ? {
-                            y: -8,
-                          }
-                        : {}
-                    }
+                return (
+                  <motion.div
+                    key={item.id}
                     className="
-                      group
+                      absolute
 
-                      relative
+                      left-1/2
+                      top-1/2
 
-                      w-[220px]
-                      h-[320px]
-
-                      sm:w-[245px]
-                      sm:h-[355px]
-
-                      md:w-[285px]
-                      md:h-[405px]
-
-                      overflow-hidden
-
-                      rounded-[20px]
-                      md:rounded-[26px]
-
-                      bg-[#101010]
-
-                      border
-                      border-white/[0.13]
-
-                      shadow-[0_35px_100px_rgba(0,0,0,0.65)]
-
-                      select-none
+                      will-change-transform
                     "
+                    initial={false}
+                    animate={getCardAnimation(
+                      position
+                    )}
+                    transition={{
+                      type: "spring",
+
+                      stiffness: 145,
+
+                      damping: 24,
+
+                      mass: 0.9,
+                    }}
+                    style={{
+                      zIndex:
+                        50 -
+                        Math.abs(
+                          position
+                        ),
+
+                      transformStyle:
+                        "preserve-3d",
+                    }}
+                    /*
+                      Drag is available on
+                      all devices.
+                    */
+
+                    drag={
+                      isActive
+                        ? "x"
+                        : false
+                    }
+                    dragConstraints={{
+                      left: 0,
+                      right: 0,
+                    }}
+                    dragElastic={0.12}
+                    onDragEnd={(
+                      event,
+                      info
+                    ) => {
+                      if (
+                        Math.abs(
+                          info.offset.x
+                        ) > 70
+                      ) {
+                        if (
+                          info.offset.x >
+                          0
+                        ) {
+                          previousSlide();
+                        } else {
+                          nextSlide();
+                        }
+                      }
+                    }}
                   >
                     {/* =================================================
-                        MAIN CARD CLICK
+                        CARD
                     ================================================= */}
 
-                    {item.websiteUrl ? (
-                      <a
-                        href={item.websiteUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="
-                          absolute
-                          inset-0
-                          z-10
-                        "
-                        aria-label={`Visit ${item.brand} website`}
-                      />
-                    ) : (
-                      <Link
-                        to={`${item.id}`}
-                        className="
-                          absolute
-                          inset-0
-                          z-10
-                        "
-                        aria-label={`View ${item.brand} portfolio`}
-                      />
-                    )}
-
-                    {/* =================================================
-                        IMAGE
-                    ================================================= */}
-
-                    <motion.img
-                      src={item.heroImage}
-                      alt={item.brand}
-                      draggable="false"
-                      animate={{
-                        scale: isActive
-                          ? 1
-                          : 1.04,
-                      }}
+                    <motion.article
                       whileHover={
                         isActive
                           ? {
-                              scale: 1.06,
+                              y: -8,
                             }
                           : {}
                       }
-                      transition={{
-                        duration: 0.8,
-                        ease: [
-                          0.22,
-                          1,
-                          0.36,
-                          1,
-                        ],
-                      }}
                       className="
-                        absolute
-                        inset-0
+                        group
 
-                        w-full
-                        h-full
+                        relative
 
-                        object-cover
+                        w-[220px]
+                        h-[320px]
 
-                        pointer-events-none
-                      "
-                    />
+                        sm:w-[245px]
+                        sm:h-[355px]
 
-                    {/* IMAGE OVERLAY */}
+                        md:w-[285px]
+                        md:h-[405px]
 
-                    <div
-                      className="
-                        absolute
-                        inset-0
+                        overflow-hidden
 
-                        bg-gradient-to-b
-                        from-black/5
-                        via-black/10
-                        to-black
-                      "
-                    />
+                        rounded-[20px]
+                        md:rounded-[26px]
 
-                    {/* =================================================
-                        TOP INFO
-                    ================================================= */}
+                        bg-[#101010]
 
-                    <div
-                      className="
-                        absolute
+                        border
+                        border-white/[0.13]
 
-                        top-3
-                        left-3
-                        right-3
+                        shadow-[0_35px_100px_rgba(0,0,0,0.65)]
 
-                        flex
-                        items-center
-                        justify-between
-
-                        z-20
+                        select-none
                       "
                     >
-                      {/* NUMBER */}
+                      {/* =================================================
+                          MAIN CLICK AREA
+                      ================================================= */}
+
+                      {item.websiteUrl ? (
+                        <a
+                          href={
+                            item.websiteUrl.startsWith(
+                              "http://"
+                            ) ||
+                            item.websiteUrl.startsWith(
+                              "https://"
+                            )
+                              ? item.websiteUrl
+                              : `https://${item.websiteUrl}`
+                          }
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="
+                            absolute
+                            inset-0
+
+                            z-10
+                          "
+                          aria-label={`Visit ${item.brand} website`}
+                        />
+                      ) : (
+                        <Link
+                          to={`/portfolio/${item.id}`}
+                          className="
+                            absolute
+                            inset-0
+
+                            z-10
+                          "
+                          aria-label={`View ${item.brand} portfolio`}
+                        />
+                      )}
+
+                      {/* =================================================
+                          IMAGE
+                      ================================================= */}
+
+                      <motion.img
+                        src={item.heroImage}
+                        alt={item.brand}
+                        draggable="false"
+                        animate={{
+                          scale: isActive
+                            ? 1
+                            : 1.04,
+                        }}
+                        whileHover={
+                          isActive
+                            ? {
+                                scale: 1.06,
+                              }
+                            : {}
+                        }
+                        transition={{
+                          duration: 0.8,
+
+                          ease: [
+                            0.22,
+                            1,
+                            0.36,
+                            1,
+                          ],
+                        }}
+                        className="
+                          absolute
+                          inset-0
+
+                          w-full
+                          h-full
+
+                          object-cover
+
+                          pointer-events-none
+                        "
+                      />
+
+                      {/* =================================================
+                          IMAGE OVERLAY
+                      ================================================= */}
 
                       <div
                         className="
+                          absolute
+                          inset-0
+
+                          bg-gradient-to-b
+                          from-black/5
+                          via-black/10
+                          to-black
+                        "
+                      />
+
+                      {/* =================================================
+                          TOP INFO
+                      ================================================= */}
+
+                      <div
+                        className="
+                          absolute
+
+                          top-3
+                          left-3
+                          right-3
+
                           flex
                           items-center
-                          justify-center
+                          justify-between
 
-                          h-7
-                          min-w-7
-
-                          px-2
-
-                          rounded-full
-
-                          bg-black/30
-
-                          backdrop-blur-xl
-
-                          border
-                          border-white/10
-
-                          text-[9px]
-
-                          text-white/65
+                          z-20
                         "
                       >
-                        {String(index + 1).padStart(
-                          2,
-                          "0"
-                        )}
-                      </div>
+                        {/* NUMBER */}
 
-                      {/* STATUS */}
-
-                      {item.websiteUrl ? (
                         <div
                           className="
                             flex
                             items-center
-                            gap-1.5
+                            justify-center
 
-                            px-2.5
-                            py-1.5
+                            h-7
+                            min-w-7
 
-                            rounded-full
-
-                            bg-black/40
-
-                            backdrop-blur-xl
-
-                            border
-                            border-white/10
-
-                            text-[8px]
-
-                            uppercase
-
-                            tracking-wider
-
-                            text-white/70
-                          "
-                        >
-                          <span
-                            className="
-                              w-1.5
-                              h-1.5
-
-                              rounded-full
-
-                              bg-green-400
-
-                              shadow-[0_0_8px_rgba(74,222,128,0.7)]
-                            "
-                          />
-
-                          Live Website
-                        </div>
-                      ) : (
-                        <div
-                          className="
-                            px-2.5
-                            py-1.5
+                            px-2
 
                             rounded-full
 
@@ -1041,186 +1203,211 @@ const Portfolio = () => {
                             border
                             border-white/10
 
-                            text-[8px]
+                            text-[9px]
 
-                            uppercase
-
-                            tracking-wider
-
-                            text-white/45
+                            text-white/65
                           "
                         >
-                          Case Study
+                          {String(
+                            index + 1
+                          ).padStart(
+                            2,
+                            "0"
+                          )}
                         </div>
-                      )}
-                    </div>
 
-                    {/* =================================================
-                        ACTIVE BORDER
-                    ================================================= */}
+                        {/* WEBSITE STATUS */}
 
-                    {isActive && (
-                      <>
-                        <div
-                          className="
-                            absolute
-                            inset-0
+                        {item.websiteUrl ? (
+                          <div
+                            className="
+                              flex
+                              items-center
+                              gap-1.5
 
-                            rounded-[20px]
-                            md:rounded-[26px]
+                              px-2.5
+                              py-1.5
 
-                            ring-1
-                            ring-white/25
+                              rounded-full
 
-                            pointer-events-none
+                              bg-black/40
 
-                            z-30
-                          "
-                        />
+                              backdrop-blur-xl
 
-                        <div
-                          className="
-                            absolute
-                            inset-0
+                              border
+                              border-white/10
 
-                            rounded-[20px]
-                            md:rounded-[26px]
+                              text-[8px]
 
-                            shadow-[inset_0_0_70px_rgba(255,255,255,0.055)]
+                              uppercase
 
-                            pointer-events-none
+                              tracking-wider
 
-                            z-30
-                          "
-                        />
-                      </>
-                    )}
+                              text-white/70
+                            "
+                          >
+                            <span
+                              className="
+                                w-1.5
+                                h-1.5
 
-                    {/* =================================================
-                        BOTTOM CONTENT
-                    ================================================= */}
+                                rounded-full
 
-                    <div
-                      className="
-                        absolute
+                                bg-green-400
 
-                        bottom-0
-                        left-0
-                        right-0
+                                shadow-[0_0_8px_rgba(74,222,128,0.7)]
+                              "
+                            />
 
-                        p-4
-                        md:p-5
+                            Live Website
+                          </div>
+                        ) : (
+                          <div
+                            className="
+                              px-2.5
+                              py-1.5
 
-                        z-20
-                      "
-                    >
-                      {/* INDUSTRY */}
+                              rounded-full
 
-                      <p
-                        className="
-                          text-purple-300
+                              bg-black/30
 
-                          text-[8px]
-                          md:text-[9px]
+                              backdrop-blur-xl
 
-                          uppercase
+                              border
+                              border-white/10
 
-                          tracking-[0.3em]
+                              text-[8px]
 
-                          mb-1.5
-                        "
-                      >
-                        {item.industry}
-                      </p>
+                              uppercase
 
-                      {/* BRAND */}
+                              tracking-wider
 
-                      <h3
-                        className="
-                          text-xl
-                          md:text-2xl
-
-                          font-semibold
-
-                          tracking-tight
-
-                          text-white
-
-                          truncate
-                        "
-                      >
-                        {item.brand}
-                      </h3>
+                              text-white/45
+                            "
+                          >
+                            Case Study
+                          </div>
+                        )}
+                      </div>
 
                       {/* =================================================
-                          ACTION BUTTONS
+                          ACTIVE BORDER
+                      ================================================= */}
+
+                      {isActive && (
+                        <>
+                          <div
+                            className="
+                              absolute
+                              inset-0
+
+                              rounded-[20px]
+                              md:rounded-[26px]
+
+                              ring-1
+                              ring-white/25
+
+                              pointer-events-none
+
+                              z-30
+                            "
+                          />
+
+                          <div
+                            className="
+                              absolute
+                              inset-0
+
+                              rounded-[20px]
+                              md:rounded-[26px]
+
+                              shadow-[inset_0_0_70px_rgba(255,255,255,0.055)]
+
+                              pointer-events-none
+
+                              z-30
+                            "
+                          />
+                        </>
+                      )}
+
+                      {/* =================================================
+                          BOTTOM CONTENT
                       ================================================= */}
 
                       <div
                         className="
-                          flex
-                          items-center
-                          gap-2
+                          absolute
 
-                          mt-3
-                          pt-3
+                          bottom-0
+                          left-0
+                          right-0
 
-                          border-t
-                          border-white/10
+                          p-4
+                          md:p-5
+
+                          z-20
                         "
                       >
-                        {/* VIEW PORTFOLIO */}
+                        {/* INDUSTRY */}
 
-                        <Link
-                          to={`/portfolio/${item.id}`}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                          }}
+                        <p
                           className="
-                            relative
-                            z-40
+                            text-purple-300
 
-                            flex
-                            items-center
-                            justify-center
-
-                            flex-1
-
-                            h-8
-
-                            rounded-lg
-
-                            border
-                            border-white/10
-
-                            bg-white/[0.04]
-
-                            text-[9px]
+                            text-[8px]
+                            md:text-[9px]
 
                             uppercase
 
-                            tracking-wider
+                            tracking-[0.3em]
 
-                            text-white/55
-
-                            hover:bg-white
-                            hover:text-black
-                            hover:border-white
-
-                            transition-all
-                            duration-300
+                            mb-1.5
                           "
                         >
-                          View Portfolio
-                        </Link>
+                          {item.industry}
+                        </p>
 
-                        {/* LIVE WEBSITE */}
+                        {/* BRAND */}
 
-                        {item.websiteUrl && (
-                          <a
-                            href={item.websiteUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <h3
+                          className="
+                            text-xl
+                            md:text-2xl
+
+                            font-semibold
+
+                            tracking-tight
+
+                            text-white
+
+                            truncate
+                          "
+                        >
+                          {item.brand}
+                        </h3>
+
+                        {/* =================================================
+                            ACTION BUTTONS
+                        ================================================= */}
+
+                        <div
+                          className="
+                            flex
+                            items-center
+                            gap-2
+
+                            mt-3
+                            pt-3
+
+                            border-t
+                            border-white/10
+                          "
+                        >
+                          {/* VIEW PORTFOLIO */}
+
+                          <Link
+                            to={`/portfolio/${item.id}`}
                             onClick={(event) => {
                               event.stopPropagation();
                             }}
@@ -1232,32 +1419,94 @@ const Portfolio = () => {
                               items-center
                               justify-center
 
-                              w-9
+                              flex-1
+
                               h-8
 
                               rounded-lg
 
-                              bg-white
+                              border
+                              border-white/10
 
-                              text-black
+                              bg-white/[0.04]
 
-                              text-sm
+                              text-[9px]
 
-                              hover:scale-105
+                              uppercase
 
-                              transition
+                              tracking-wider
+
+                              text-white/55
+
+                              hover:bg-white
+                              hover:text-black
+                              hover:border-white
+
+                              transition-all
+                              duration-300
                             "
-                            aria-label={`Visit ${item.brand} website`}
                           >
-                            ↗
-                          </a>
-                        )}
+                            View Portfolio
+                          </Link>
+
+                          {/* =================================================
+                              LIVE WEBSITE BUTTON
+                          ================================================= */}
+
+                          {item.websiteUrl && (
+                            <a
+                              href={
+                                item.websiteUrl.startsWith(
+                                  "http://"
+                                ) ||
+                                item.websiteUrl.startsWith(
+                                  "https://"
+                                )
+                                  ? item.websiteUrl
+                                  : `https://${item.websiteUrl}`
+                              }
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(
+                                event
+                              ) => {
+                                event.stopPropagation();
+                              }}
+                              className="
+                                relative
+                                z-40
+
+                                flex
+                                items-center
+                                justify-center
+
+                                w-9
+                                h-8
+
+                                rounded-lg
+
+                                bg-white
+
+                                text-black
+
+                                text-sm
+
+                                hover:scale-105
+
+                                transition
+                              "
+                              aria-label={`Visit ${item.brand} website`}
+                            >
+                              ↗
+                            </a>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </motion.article>
-                </motion.div>
-              );
-            })}
+                    </motion.article>
+                  </motion.div>
+                );
+              }
+            )}
           </div>
         </div>
 
@@ -1324,7 +1573,9 @@ const Portfolio = () => {
             ←
           </motion.button>
 
-          {/* DOTS */}
+          {/* =================================================
+              DOTS
+          ================================================= */}
 
           <div
             className="
@@ -1334,45 +1585,51 @@ const Portfolio = () => {
               gap-1.5
             "
           >
-            {portfolios.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => {
-                  setActiveIndex(index);
-                }}
-                className="p-1"
-                aria-label={`Project ${
-                  index + 1
-                }`}
-              >
-                <motion.span
-                  animate={{
-                    width:
-                      index === activeIndex
-                        ? 28
-                        : 5,
-
-                    opacity:
-                      index === activeIndex
-                        ? 1
-                        : 0.2,
+            {portfolios.map(
+              (item, index) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => {
+                    setActiveIndex(
+                      index
+                    );
                   }}
-                  transition={{
-                    duration: 0.3,
-                  }}
-                  className="
-                    block
+                  className="p-1"
+                  aria-label={`Project ${
+                    index + 1
+                  }`}
+                >
+                  <motion.span
+                    animate={{
+                      width:
+                        index ===
+                        activeIndex
+                          ? 28
+                          : 5,
 
-                    h-[5px]
+                      opacity:
+                        index ===
+                        activeIndex
+                          ? 1
+                          : 0.2,
+                    }}
+                    transition={{
+                      duration: 0.3,
+                    }}
+                    className="
+                      block
 
-                    rounded-full
+                      h-[5px]
 
-                    bg-white
-                  "
-                />
-              </button>
-            ))}
+                      rounded-full
+
+                      bg-white
+                    "
+                  />
+                </button>
+              )
+            )}
           </div>
 
           {/* NEXT */}
@@ -1421,9 +1678,120 @@ const Portfolio = () => {
           </motion.button>
         </div>
 
-        
+        {/* =====================================================
+            AUTOPLAY PROGRESS
+            DESKTOP ONLY
+        ===================================================== */}
 
-        {/* COUNTER */}
+        {isDesktop && (
+          <div
+            className="
+              mt-6
+
+              flex
+              flex-col
+              items-center
+
+              gap-2
+            "
+          >
+            <div
+              className="
+                relative
+
+                w-[110px]
+                md:w-[150px]
+
+                h-[2px]
+
+                bg-white/10
+
+                overflow-hidden
+
+                rounded-full
+              "
+            >
+              {!isHovered && (
+                <motion.div
+                  key={activeIndex}
+                  initial={{
+                    width: "0%",
+                  }}
+                  animate={{
+                    width: "100%",
+                  }}
+                  transition={{
+                    duration:
+                      AUTO_PLAY_TIME /
+                      1000,
+
+                    ease: "linear",
+                  }}
+                  className="
+                    absolute
+
+                    left-0
+                    top-0
+                    bottom-0
+
+                    bg-white/60
+
+                    rounded-full
+                  "
+                />
+              )}
+            </div>
+
+            <p
+              className="
+                text-[8px]
+
+                uppercase
+
+                tracking-[0.35em]
+
+                text-white/20
+              "
+            >
+              {isHovered
+                ? "Paused"
+                : "Auto play"}
+            </p>
+          </div>
+        )}
+
+        {/* =====================================================
+            MOBILE SWIPE TEXT
+        ===================================================== */}
+
+        {!isDesktop && (
+          <div
+            className="
+              mt-6
+
+              flex
+              justify-center
+            "
+          >
+            <p
+              className="
+                text-[8px]
+
+                uppercase
+
+                tracking-[0.35em]
+
+                text-white/20
+              "
+            >
+              Swipe to explore
+            </p>
+          </div>
+        )}
+
+        {/* =====================================================
+            COUNTER
+        ===================================================== */}
 
         <div
           className="
@@ -1440,16 +1808,18 @@ const Portfolio = () => {
             text-white/20
           "
         >
-          {String(activeIndex + 1).padStart(
-            2,
-            "0"
-          )}
+          {String(
+            activeIndex + 1
+          ).padStart(2, "0")}
 
           <span className="mx-2 text-white/10">
             /
           </span>
 
-          {String(total).padStart(2, "0")}
+          {String(total).padStart(
+            2,
+            "0"
+          )}
         </div>
       </section>
     </div>
