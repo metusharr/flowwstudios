@@ -863,7 +863,7 @@ const Portfolio = () => {
                       />
                     ) : (
                       <Link
-                        to={`/portfolio/${item.id}`}
+                        to={`${item.id}`}
                         className="
                           absolute
                           inset-0
