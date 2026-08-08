@@ -16,56 +16,104 @@ import ballImg from "../assets/portfolio-o.png";
 import NewNavbar from "../components/Navbar";
 
 const AUTO_PLAY_TIME = 4000;
+const DESKTOP_BREAKPOINT = 768;
 
 const Portfolio = () => {
+  /* =========================================================
+     SAFE PORTFOLIO DATA
+  ========================================================= */
+
+  const portfolioData = Array.isArray(portfolios)
+    ? portfolios.filter(Boolean)
+    : [];
+
+  const total = portfolioData.length;
+
   /* =========================================================
      STATE
   ========================================================= */
 
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
   const [isHovered, setIsHovered] = useState(false);
 
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window === "undefined") {
-      return false;
-    }
+  const [isLoaded, setIsLoaded] = useState(false);
 
-    return window.innerWidth >= 768;
-  });
+  /* =========================================================
+     REFS
+  ========================================================= */
 
   const autoplayRef = useRef(null);
 
-  const total = portfolios?.length || 0;
+  const touchStartX = useRef(null);
+
+  const touchEndX = useRef(null);
 
   /* =========================================================
-     RESPONSIVE CHECK
-     Desktop = 768px+
+     INITIAL LOAD
   ========================================================= */
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
+    setIsLoaded(true);
+  }, []);
+
+  /* =========================================================
+     DESKTOP DETECTION
+     IMPORTANT:
+     No window usage during initial render
+  ========================================================= */
+
+  useEffect(() => {
+    const checkScreen = () => {
+      if (typeof window === "undefined") {
+        return;
+      }
+
+      setIsDesktop(
+        window.innerWidth >= DESKTOP_BREAKPOINT
+      );
     };
 
-    handleResize();
+    checkScreen();
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener(
+      "resize",
+      checkScreen
+    );
 
     return () => {
       window.removeEventListener(
         "resize",
-        handleResize
+        checkScreen
       );
     };
   }, []);
 
   /* =========================================================
-     NEXT SLIDE
+     KEEP INDEX SAFE
+  ========================================================= */
+
+  useEffect(() => {
+    if (!total) {
+      setActiveIndex(0);
+      return;
+    }
+
+    if (activeIndex >= total) {
+      setActiveIndex(0);
+    }
+  }, [total, activeIndex]);
+
+  /* =========================================================
+     NEXT
   ========================================================= */
 
   const nextSlide = useCallback(() => {
-    if (!total) return;
+    if (total <= 1) {
+      return;
+    }
 
     setActiveIndex((current) => {
       return (current + 1) % total;
@@ -73,11 +121,13 @@ const Portfolio = () => {
   }, [total]);
 
   /* =========================================================
-     PREVIOUS SLIDE
+     PREVIOUS
   ========================================================= */
 
   const previousSlide = useCallback(() => {
-    if (!total) return;
+    if (total <= 1) {
+      return;
+    }
 
     setActiveIndex((current) => {
       return (
@@ -92,46 +142,39 @@ const Portfolio = () => {
 
   useEffect(() => {
     /*
-      IMPORTANT:
-
-      Mobile:
-      < 768px
-
-      Autoplay completely disabled.
-    */
-
-    if (!isDesktop) {
-      if (autoplayRef.current) {
-        clearInterval(autoplayRef.current);
-
-        autoplayRef.current = null;
-      }
-
-      return;
-    }
-
-    /*
-      Clear previous interval before
-      creating a new one.
+      Always clear previous interval first.
     */
 
     if (autoplayRef.current) {
       clearInterval(autoplayRef.current);
-
       autoplayRef.current = null;
     }
 
     /*
-      Don't autoplay when:
-      - mouse is hovering
-      - only one project exists
+      Mobile = NO AUTOPLAY
     */
 
-    if (isHovered || total <= 1) {
+    if (!isDesktop) {
       return;
     }
 
-    autoplayRef.current = setInterval(() => {
+    /*
+      Don't autoplay while hovering.
+    */
+
+    if (isHovered) {
+      return;
+    }
+
+    /*
+      Nothing to autoplay.
+    */
+
+    if (total <= 1) {
+      return;
+    }
+
+    autoplayRef.current = window.setInterval(() => {
       setActiveIndex((current) => {
         return (current + 1) % total;
       });
@@ -140,7 +183,6 @@ const Portfolio = () => {
     return () => {
       if (autoplayRef.current) {
         clearInterval(autoplayRef.current);
-
         autoplayRef.current = null;
       }
     };
@@ -151,7 +193,7 @@ const Portfolio = () => {
   ]);
 
   /* =========================================================
-     KEYBOARD CONTROLS
+     KEYBOARD
   ========================================================= */
 
   useEffect(() => {
@@ -182,10 +224,73 @@ const Portfolio = () => {
   ]);
 
   /* =========================================================
-     GET CARD POSITION
+     TOUCH START
+  ========================================================= */
+
+  const handleTouchStart = (event) => {
+    if (!event.touches?.length) {
+      return;
+    }
+
+    touchStartX.current =
+      event.touches[0].clientX;
+
+    touchEndX.current =
+      event.touches[0].clientX;
+  };
+
+  /* =========================================================
+     TOUCH MOVE
+  ========================================================= */
+
+  const handleTouchMove = (event) => {
+    if (!event.touches?.length) {
+      return;
+    }
+
+    touchEndX.current =
+      event.touches[0].clientX;
+  };
+
+  /* =========================================================
+     TOUCH END
+  ========================================================= */
+
+  const handleTouchEnd = () => {
+    if (
+      touchStartX.current === null ||
+      touchEndX.current === null
+    ) {
+      return;
+    }
+
+    const distance =
+      touchStartX.current -
+      touchEndX.current;
+
+    const minimumSwipe = 60;
+
+    if (Math.abs(distance) >= minimumSwipe) {
+      if (distance > 0) {
+        nextSlide();
+      } else {
+        previousSlide();
+      }
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
+
+  /* =========================================================
+     CARD POSITION
   ========================================================= */
 
   const getPosition = (index) => {
+    if (!total) {
+      return 0;
+    }
+
     let position =
       index - activeIndex;
 
@@ -207,9 +312,7 @@ const Portfolio = () => {
   const getCardAnimation = (
     position
   ) => {
-    /*
-      CENTER CARD
-    */
+    /* CENTER */
 
     if (position === 0) {
       return {
@@ -223,9 +326,7 @@ const Portfolio = () => {
       };
     }
 
-    /*
-      LEFT / RIGHT
-    */
+    /* IMMEDIATE SIDES */
 
     if (
       position === -1 ||
@@ -241,14 +342,10 @@ const Portfolio = () => {
         scale: 0.88,
 
         rotateY:
-          position === -1
-            ? 8
-            : -8,
+          position < 0 ? 8 : -8,
 
         rotateZ:
-          position === -1
-            ? -1
-            : 1,
+          position < 0 ? -1 : 1,
 
         opacity: 0.78,
 
@@ -256,9 +353,7 @@ const Portfolio = () => {
       };
     }
 
-    /*
-      FAR LEFT / FAR RIGHT
-    */
+    /* SECONDARY SIDES */
 
     if (
       position === -2 ||
@@ -274,24 +369,18 @@ const Portfolio = () => {
         scale: 0.75,
 
         rotateY:
-          position === -2
-            ? 13
-            : -13,
+          position < 0 ? 13 : -13,
 
         rotateZ:
-          position === -2
-            ? -2
-            : 2,
+          position < 0 ? -2 : 2,
 
-        opacity: 0.48,
+        opacity: 0.45,
 
         filter: "blur(0.5px)",
       };
     }
 
-    /*
-      HIDDEN CARDS
-    */
+    /* HIDDEN */
 
     return {
       x: `calc(-50% + ${
@@ -303,14 +392,10 @@ const Portfolio = () => {
       scale: 0.65,
 
       rotateY:
-        position < 0
-          ? 18
-          : -18,
+        position < 0 ? 18 : -18,
 
       rotateZ:
-        position < 0
-          ? -3
-          : 3,
+        position < 0 ? -3 : 3,
 
       opacity: 0,
 
@@ -319,7 +404,47 @@ const Portfolio = () => {
   };
 
   /* =========================================================
-     NO PORTFOLIO DATA
+     SAFE WEBSITE URL
+  ========================================================= */
+
+  const getWebsiteUrl = (item) => {
+    if (!item) {
+      return null;
+    }
+
+    const rawUrl = item.websiteUrl;
+
+    if (
+      typeof rawUrl !== "string" ||
+      !rawUrl.trim()
+    ) {
+      return null;
+    }
+
+    const cleanUrl = rawUrl.trim();
+
+    if (
+      cleanUrl.startsWith("http://") ||
+      cleanUrl.startsWith("https://")
+    ) {
+      return cleanUrl;
+    }
+
+    return `https://${cleanUrl}`;
+  };
+
+  /* =========================================================
+     LOADING STATE
+  ========================================================= */
+
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-black" />
+    );
+  }
+
+  /* =========================================================
+     EMPTY DATA
   ========================================================= */
 
   if (!total) {
@@ -338,6 +463,7 @@ const Portfolio = () => {
         relative
         min-h-screen
         overflow-hidden
+        bg-black
         bg-cover
         bg-center
         bg-no-repeat
@@ -348,7 +474,7 @@ const Portfolio = () => {
       }}
     >
       {/* =====================================================
-          DARK OVERLAY
+          BACKGROUND OVERLAY
       ===================================================== */}
 
       <div
@@ -365,7 +491,7 @@ const Portfolio = () => {
       />
 
       {/* =====================================================
-          AMBIENT GLOW
+          AMBIENT LIGHT
       ===================================================== */}
 
       <div
@@ -381,9 +507,11 @@ const Portfolio = () => {
           w-[850px]
           h-[650px]
 
+          max-w-[100vw]
+
           rounded-full
 
-          bg-purple-700/[0.08]
+          bg-purple-700/[0.07]
 
           blur-[160px]
 
@@ -396,19 +524,20 @@ const Portfolio = () => {
           fixed
 
           left-1/2
-          top-[65%]
+          top-[70%]
 
           -translate-x-1/2
-          -translate-y-1/2
 
           w-[500px]
-          h-[320px]
+          h-[300px]
+
+          max-w-[100vw]
 
           rounded-full
 
-          bg-purple-500/[0.06]
+          bg-purple-500/[0.05]
 
-          blur-[120px]
+          blur-[130px]
 
           pointer-events-none
         "
@@ -445,14 +574,14 @@ const Portfolio = () => {
         <motion.p
           initial={{
             opacity: 0,
-            y: 30,
+            y: 25,
           }}
           animate={{
             opacity: 1,
             y: 0,
           }}
           transition={{
-            duration: 0.6,
+            duration: 0.55,
           }}
           className="
             text-purple-400
@@ -472,24 +601,20 @@ const Portfolio = () => {
           Our
         </motion.p>
 
-        {/* ===================================================
-            TITLE
-        =================================================== */}
+        {/* TITLE */}
 
         <div className="flex flex-col items-center">
           <motion.h1
             initial={{
               opacity: 0,
-              y: 70,
-              scale: 0.96,
+              y: 60,
             }}
             animate={{
               opacity: 1,
               y: 0,
-              scale: 1,
             }}
             transition={{
-              duration: 0.9,
+              duration: 0.8,
               ease: [
                 0.22,
                 1,
@@ -499,12 +624,12 @@ const Portfolio = () => {
             }}
             className="
               text-[42px]
-              sm:text-[72px]
+              sm:text-[70px]
               md:text-[140px]
 
               font-extrabold
 
-              tracking-[0.06em]
+              tracking-[0.05em]
 
               leading-none
 
@@ -521,6 +646,7 @@ const Portfolio = () => {
             <motion.img
               src={ballImg}
               alt="O"
+              draggable="false"
               initial={{
                 scale: 0,
                 rotate: -180,
@@ -530,14 +656,14 @@ const Portfolio = () => {
                 rotate: 0,
               }}
               transition={{
-                delay: 0.3,
+                delay: 0.25,
                 type: "spring",
                 stiffness: 160,
                 damping: 12,
               }}
               className="
                 w-[42px]
-                sm:w-[72px]
+                sm:w-[70px]
                 md:w-[140px]
 
                 mt-3
@@ -552,22 +678,20 @@ const Portfolio = () => {
             LIO
           </motion.h1>
 
-          {/* =================================================
-              SUBTITLE
-          ================================================= */}
+          {/* SUBTITLE */}
 
           <motion.p
             initial={{
               opacity: 0,
-              x: 35,
+              x: 30,
             }}
             animate={{
               opacity: 1,
               x: 0,
             }}
             transition={{
-              delay: 0.5,
-              duration: 0.7,
+              delay: 0.45,
+              duration: 0.65,
             }}
             className="
               text-purple-400
@@ -595,46 +719,41 @@ const Portfolio = () => {
           </motion.p>
         </div>
 
-        {/* =================================================
-            CTA
-        ================================================= */}
+        {/* CTA */}
 
         <motion.div
           initial={{
             opacity: 0,
-            y: 25,
+            scale: 0.9,
           }}
           animate={{
             opacity: 1,
-            y: 0,
+            scale: 1,
           }}
           transition={{
-            delay: 0.7,
-            duration: 0.6,
+            delay: 0.65,
+            duration: 0.55,
           }}
           className="
+            mt-10
+
             flex
             justify-center
-
-            mt-10
           "
         >
           <motion.button
+            type="button"
             whileHover={{
-              scale: 1.06,
-              y: -3,
+              scale: 1.05,
+              y: -2,
             }}
             whileTap={{
               scale: 0.96,
             }}
             className="
-              group
-
-              relative
-
               flex
               items-center
-              gap-3
+              gap-2
 
               bg-white
               text-black
@@ -646,57 +765,34 @@ const Portfolio = () => {
 
               font-semibold
 
-              shadow-[0_20px_60px_rgba(255,255,255,0.12)]
-
-              overflow-hidden
+              shadow-[0_20px_60px_rgba(255,255,255,0.1)]
             "
           >
-            <span
-              className="
-                absolute
-                inset-0
-
-                bg-gradient-to-r
-                from-transparent
-                via-black/[0.04]
-                to-transparent
-
-                -translate-x-full
-
-                group-hover:translate-x-full
-
-                transition-transform
-                duration-700
-              "
-            />
-
             <img
               src="/star.png"
-              alt="Star"
+              alt=""
+              draggable="false"
               className="
-                relative
-
                 h-8
                 md:h-10
 
                 w-auto
+
                 object-contain
               "
             />
 
-            <span className="relative">
+            <span>
               Schedule a call
             </span>
 
-            <span className="relative">
+            <span>
               ↗
             </span>
           </motion.button>
         </motion.div>
 
-        {/* =================================================
-            TAGLINE
-        ================================================= */}
+        {/* TAGLINE */}
 
         <motion.div
           initial={{
@@ -708,7 +804,7 @@ const Portfolio = () => {
             y: 0,
           }}
           transition={{
-            delay: 0.9,
+            delay: 0.8,
             duration: 0.6,
           }}
           className="
@@ -721,6 +817,8 @@ const Portfolio = () => {
             md:pt-20
 
             pb-8
+
+            px-2
           "
         >
           <p
@@ -762,7 +860,7 @@ const Portfolio = () => {
       </section>
 
       {/* =====================================================
-          PORTFOLIO SECTION
+          PORTFOLIO
       ===================================================== */}
 
       <section
@@ -777,36 +875,19 @@ const Portfolio = () => {
           md:pb-40
         "
       >
-        {/* ===================================================
-            SECTION LABEL
-        =================================================== */}
+        {/* SECTION TITLE */}
 
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 20,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.2,
-          }}
-          transition={{
-            duration: 0.5,
-          }}
+        <div
           className="
             text-center
 
-            mb-8
+            mb-7
             md:mb-10
           "
         >
           <p
             className="
-              text-[10px]
+              text-[9px]
               md:text-xs
 
               uppercase
@@ -831,10 +912,10 @@ const Portfolio = () => {
               mt-4
             "
           />
-        </motion.div>
+        </div>
 
         {/* ===================================================
-            CAROUSEL
+            CAROUSEL AREA
         =================================================== */}
 
         <div
@@ -844,21 +925,17 @@ const Portfolio = () => {
             w-full
 
             h-[470px]
-            sm:h-[540px]
+            sm:h-[530px]
             md:h-[600px]
 
             overflow-hidden
 
             [perspective:1800px]
-          "
-          /*
-            Desktop:
-            Hover pauses autoplay.
 
-            Mobile:
-            isDesktop false, so autoplay
-            is already disabled.
-          */
+            touch-pan-y
+
+            select-none
+          "
           onMouseEnter={() => {
             if (isDesktop) {
               setIsHovered(true);
@@ -869,10 +946,11 @@ const Portfolio = () => {
               setIsHovered(false);
             }
           }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
-          {/* =================================================
-              FLOOR GLOW
-          ================================================= */}
+          {/* FLOOR GLOW */}
 
           <div
             className="
@@ -885,11 +963,13 @@ const Portfolio = () => {
               -translate-y-1/2
 
               w-[900px]
+              max-w-[100vw]
+
               h-[220px]
 
               rounded-[50%]
 
-              bg-purple-600/[0.07]
+              bg-purple-600/[0.06]
 
               blur-[100px]
 
@@ -909,7 +989,7 @@ const Portfolio = () => {
               -translate-x-1/2
 
               w-[700px]
-              max-w-[70%]
+              max-w-[75vw]
 
               h-px
 
@@ -936,13 +1016,14 @@ const Portfolio = () => {
               justify-center
             "
           >
-            {portfolios.map(
+            {portfolioData.map(
               (item, index) => {
                 const position =
                   getPosition(index);
 
                 /*
-                  Only render 5 visible cards
+                  Only keep five cards mounted.
+                  This reduces mobile load.
                 */
 
                 if (
@@ -954,9 +1035,15 @@ const Portfolio = () => {
                 const isActive =
                   position === 0;
 
+                const websiteUrl =
+                  getWebsiteUrl(item);
+
                 return (
                   <motion.div
-                    key={item.id}
+                    key={
+                      item.id ||
+                      `portfolio-${index}`
+                    }
                     className="
                       absolute
 
@@ -972,7 +1059,7 @@ const Portfolio = () => {
                     transition={{
                       type: "spring",
 
-                      stiffness: 145,
+                      stiffness: 140,
 
                       damping: 24,
 
@@ -988,40 +1075,6 @@ const Portfolio = () => {
                       transformStyle:
                         "preserve-3d",
                     }}
-                    /*
-                      Drag is available on
-                      all devices.
-                    */
-
-                    drag={
-                      isActive
-                        ? "x"
-                        : false
-                    }
-                    dragConstraints={{
-                      left: 0,
-                      right: 0,
-                    }}
-                    dragElastic={0.12}
-                    onDragEnd={(
-                      event,
-                      info
-                    ) => {
-                      if (
-                        Math.abs(
-                          info.offset.x
-                        ) > 70
-                      ) {
-                        if (
-                          info.offset.x >
-                          0
-                        ) {
-                          previousSlide();
-                        } else {
-                          nextSlide();
-                        }
-                      }
-                    }}
                   >
                     {/* =================================================
                         CARD
@@ -1029,11 +1082,11 @@ const Portfolio = () => {
 
                     <motion.article
                       whileHover={
-                        isActive
+                        isActive && isDesktop
                           ? {
-                              y: -8,
+                              y: -7,
                             }
-                          : {}
+                          : undefined
                       }
                       className="
                         group
@@ -1059,96 +1112,69 @@ const Portfolio = () => {
                         border
                         border-white/[0.13]
 
-                        shadow-[0_35px_100px_rgba(0,0,0,0.65)]
-
-                        select-none
+                        shadow-[0_30px_90px_rgba(0,0,0,0.65)]
                       "
                     >
-                      {/* =================================================
-                          MAIN CLICK AREA
-                      ================================================= */}
-
-                      {item.websiteUrl ? (
-                        <a
-                          href={
-                            item.websiteUrl.startsWith(
-                              "http://"
-                            ) ||
-                            item.websiteUrl.startsWith(
-                              "https://"
-                            )
-                              ? item.websiteUrl
-                              : `https://${item.websiteUrl}`
-                          }
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="
-                            absolute
-                            inset-0
-
-                            z-10
-                          "
-                          aria-label={`Visit ${item.brand} website`}
-                        />
-                      ) : (
-                        <Link
-                          to={`/portfolio/${item.id}`}
-                          className="
-                            absolute
-                            inset-0
-
-                            z-10
-                          "
-                          aria-label={`View ${item.brand} portfolio`}
-                        />
-                      )}
-
                       {/* =================================================
                           IMAGE
                       ================================================= */}
 
-                      <motion.img
-                        src={item.heroImage}
-                        alt={item.brand}
-                        draggable="false"
-                        animate={{
-                          scale: isActive
-                            ? 1
-                            : 1.04,
-                        }}
-                        whileHover={
-                          isActive
-                            ? {
-                                scale: 1.06,
-                              }
-                            : {}
-                        }
-                        transition={{
-                          duration: 0.8,
+                      {item.heroImage ? (
+                        <img
+                          src={item.heroImage}
+                          alt={
+                            item.brand ||
+                            "Portfolio project"
+                          }
+                          draggable="false"
+                          loading={
+                            isActive
+                              ? "eager"
+                              : "lazy"
+                          }
+                          decoding="async"
+                          className="
+                            absolute
+                            inset-0
 
-                          ease: [
-                            0.22,
-                            1,
-                            0.36,
-                            1,
-                          ],
-                        }}
-                        className="
-                          absolute
-                          inset-0
+                            w-full
+                            h-full
 
-                          w-full
-                          h-full
+                            object-cover
 
-                          object-cover
+                            pointer-events-none
 
-                          pointer-events-none
-                        "
-                      />
+                            transition-transform
+                            duration-700
 
-                      {/* =================================================
-                          IMAGE OVERLAY
-                      ================================================= */}
+                            group-hover:scale-[1.04]
+                          "
+                        />
+                      ) : (
+                        <div
+                          className="
+                            absolute
+                            inset-0
+
+                            bg-neutral-900
+
+                            flex
+                            items-center
+                            justify-center
+                          "
+                        >
+                          <span
+                            className="
+                              text-white/20
+                              text-sm
+                            "
+                          >
+                            No preview
+                          </span>
+                        </div>
+                      )}
+
+                      {/* IMAGE OVERLAY */}
 
                       <div
                         className="
@@ -1196,7 +1222,7 @@ const Portfolio = () => {
 
                             rounded-full
 
-                            bg-black/30
+                            bg-black/35
 
                             backdrop-blur-xl
 
@@ -1216,9 +1242,9 @@ const Portfolio = () => {
                           )}
                         </div>
 
-                        {/* WEBSITE STATUS */}
+                        {/* STATUS */}
 
-                        {item.websiteUrl ? (
+                        {websiteUrl ? (
                           <div
                             className="
                               flex
@@ -1259,7 +1285,7 @@ const Portfolio = () => {
                               "
                             />
 
-                            Live Website
+                            Live
                           </div>
                         ) : (
                           <div
@@ -1295,40 +1321,22 @@ const Portfolio = () => {
                       ================================================= */}
 
                       {isActive && (
-                        <>
-                          <div
-                            className="
-                              absolute
-                              inset-0
+                        <div
+                          className="
+                            absolute
+                            inset-0
 
-                              rounded-[20px]
-                              md:rounded-[26px]
+                            rounded-[20px]
+                            md:rounded-[26px]
 
-                              ring-1
-                              ring-white/25
+                            ring-1
+                            ring-white/20
 
-                              pointer-events-none
+                            pointer-events-none
 
-                              z-30
-                            "
-                          />
-
-                          <div
-                            className="
-                              absolute
-                              inset-0
-
-                              rounded-[20px]
-                              md:rounded-[26px]
-
-                              shadow-[inset_0_0_70px_rgba(255,255,255,0.055)]
-
-                              pointer-events-none
-
-                              z-30
-                            "
-                          />
-                        </>
+                            z-30
+                          "
+                        />
                       )}
 
                       {/* =================================================
@@ -1346,7 +1354,7 @@ const Portfolio = () => {
                           p-4
                           md:p-5
 
-                          z-20
+                          z-40
                         "
                       >
                         {/* INDUSTRY */}
@@ -1360,12 +1368,15 @@ const Portfolio = () => {
 
                             uppercase
 
-                            tracking-[0.3em]
+                            tracking-[0.28em]
 
                             mb-1.5
+
+                            truncate
                           "
                         >
-                          {item.industry}
+                          {item.industry ||
+                            "Creative Project"}
                         </p>
 
                         {/* BRAND */}
@@ -1384,11 +1395,12 @@ const Portfolio = () => {
                             truncate
                           "
                         >
-                          {item.brand}
+                          {item.brand ||
+                            "Portfolio"}
                         </h3>
 
                         {/* =================================================
-                            ACTION BUTTONS
+                            BUTTONS
                         ================================================= */}
 
                         <div
@@ -1404,16 +1416,18 @@ const Portfolio = () => {
                             border-white/10
                           "
                         >
-                          {/* VIEW PORTFOLIO */}
+                          {/* PORTFOLIO */}
 
                           <Link
-                            to={`/portfolio/${item.id}`}
+                            to={`/portfolio/${
+                              item.id || ""
+                            }`}
                             onClick={(event) => {
                               event.stopPropagation();
                             }}
                             className="
                               relative
-                              z-40
+                              z-50
 
                               flex
                               items-center
@@ -1428,7 +1442,7 @@ const Portfolio = () => {
                               border
                               border-white/10
 
-                              bg-white/[0.04]
+                              bg-white/[0.05]
 
                               text-[9px]
 
@@ -1436,7 +1450,7 @@ const Portfolio = () => {
 
                               tracking-wider
 
-                              text-white/55
+                              text-white/65
 
                               hover:bg-white
                               hover:text-black
@@ -1449,32 +1463,19 @@ const Portfolio = () => {
                             View Portfolio
                           </Link>
 
-                          {/* =================================================
-                              LIVE WEBSITE BUTTON
-                          ================================================= */}
+                          {/* LIVE WEBSITE */}
 
-                          {item.websiteUrl && (
+                          {websiteUrl && (
                             <a
-                              href={
-                                item.websiteUrl.startsWith(
-                                  "http://"
-                                ) ||
-                                item.websiteUrl.startsWith(
-                                  "https://"
-                                )
-                                  ? item.websiteUrl
-                                  : `https://${item.websiteUrl}`
-                              }
+                              href={websiteUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              onClick={(
-                                event
-                              ) => {
+                              onClick={(event) => {
                                 event.stopPropagation();
                               }}
                               className="
                                 relative
-                                z-40
+                                z-50
 
                                 flex
                                 items-center
@@ -1495,13 +1496,56 @@ const Portfolio = () => {
 
                                 transition
                               "
-                              aria-label={`Visit ${item.brand} website`}
+                              aria-label={`Visit ${
+                                item.brand ||
+                                "client"
+                              } website`}
                             >
                               ↗
                             </a>
                           )}
                         </div>
                       </div>
+
+                      {/* =================================================
+                          CLICK AREA
+                      ================================================= */}
+
+                      {websiteUrl ? (
+                        <a
+                          href={websiteUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Visit ${
+                            item.brand ||
+                            "client"
+                          } website`}
+                          className="
+                            absolute
+
+                            inset-0
+
+                            z-10
+                          "
+                        />
+                      ) : (
+                        <Link
+                          to={`/portfolio/${
+                            item.id || ""
+                          }`}
+                          aria-label={`View ${
+                            item.brand ||
+                            "client"
+                          } portfolio`}
+                          className="
+                            absolute
+
+                            inset-0
+
+                            z-10
+                          "
+                        />
+                      )}
                     </motion.article>
                   </motion.div>
                 );
@@ -1523,7 +1567,7 @@ const Portfolio = () => {
             items-center
             justify-center
 
-            gap-5
+            gap-4
 
             mt-1
           "
@@ -1535,7 +1579,6 @@ const Portfolio = () => {
             onClick={previousSlide}
             whileHover={{
               scale: 1.08,
-              x: -3,
             }}
             whileTap={{
               scale: 0.9,
@@ -1564,7 +1607,6 @@ const Portfolio = () => {
 
               hover:text-white
               hover:bg-white/[0.08]
-              hover:border-white/20
 
               transition
             "
@@ -1573,22 +1615,22 @@ const Portfolio = () => {
             ←
           </motion.button>
 
-          {/* =================================================
-              DOTS
-          ================================================= */}
+          {/* DOTS */}
 
           <div
             className="
               flex
               items-center
-
-              gap-1.5
+              gap-1
             "
           >
-            {portfolios.map(
+            {portfolioData.map(
               (item, index) => (
                 <button
-                  key={item.id}
+                  key={
+                    item.id ||
+                    `dot-${index}`
+                  }
                   type="button"
                   onClick={() => {
                     setActiveIndex(
@@ -1596,7 +1638,7 @@ const Portfolio = () => {
                     );
                   }}
                   className="p-1"
-                  aria-label={`Project ${
+                  aria-label={`Go to project ${
                     index + 1
                   }`}
                 >
@@ -1605,7 +1647,7 @@ const Portfolio = () => {
                       width:
                         index ===
                         activeIndex
-                          ? 28
+                          ? 26
                           : 5,
 
                       opacity:
@@ -1615,7 +1657,7 @@ const Portfolio = () => {
                           : 0.2,
                     }}
                     transition={{
-                      duration: 0.3,
+                      duration: 0.25,
                     }}
                     className="
                       block
@@ -1639,7 +1681,6 @@ const Portfolio = () => {
             onClick={nextSlide}
             whileHover={{
               scale: 1.08,
-              x: 3,
             }}
             whileTap={{
               scale: 0.9,
@@ -1668,7 +1709,6 @@ const Portfolio = () => {
 
               hover:text-white
               hover:bg-white/[0.08]
-              hover:border-white/20
 
               transition
             "
@@ -1679,8 +1719,7 @@ const Portfolio = () => {
         </div>
 
         {/* =====================================================
-            AUTOPLAY PROGRESS
-            DESKTOP ONLY
+            DESKTOP AUTOPLAY
         ===================================================== */}
 
         {isDesktop && (
@@ -1699,16 +1738,16 @@ const Portfolio = () => {
               className="
                 relative
 
-                w-[110px]
+                w-[120px]
                 md:w-[150px]
 
                 h-[2px]
 
+                rounded-full
+
                 bg-white/10
 
                 overflow-hidden
-
-                rounded-full
               "
             >
               {!isHovered && (
@@ -1761,18 +1800,11 @@ const Portfolio = () => {
         )}
 
         {/* =====================================================
-            MOBILE SWIPE TEXT
+            MOBILE
         ===================================================== */}
 
         {!isDesktop && (
-          <div
-            className="
-              mt-6
-
-              flex
-              justify-center
-            "
-          >
+          <div className="mt-6 text-center">
             <p
               className="
                 text-[8px]
@@ -1789,9 +1821,7 @@ const Portfolio = () => {
           </div>
         )}
 
-        {/* =====================================================
-            COUNTER
-        ===================================================== */}
+        {/* COUNTER */}
 
         <div
           className="
