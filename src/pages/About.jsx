@@ -61,28 +61,7 @@ const AboutHero = () => {
               digital products that drive growth and engagement.
             </motion.p>
 
-            {/* STATS */}
-            <div className="relative pt-4 lg:pt-8">
-              <div className="flex gap-8 lg:gap-16 pt-4 lg:pt-8 text-2xl lg:text-4xl font-semibold flex-wrap">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.8 }}
-                  className="bg-gradient-to-r from-white/40 via-white to-white/40 bg-clip-text text-transparent"
-                >
-                  + 10 clients
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1 }}
-                  className="bg-gradient-to-r from-white/40 via-white to-white/40 bg-clip-text text-transparent"
-                >
-                  + 20 Projects
-                </motion.div>
-              </div>
-            </div>
+            
           </motion.div>
 
           {/* RIGHT IMAGE */}
