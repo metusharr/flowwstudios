@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 import bgImage from "../assets/background.png";
-import rightImage from "../assets/purple-ui.png";
+import rightImage from "../assets/purple-ui.webp";
 
 import AboutWhyUs from "../components/aboutwhyus";
 import CustomerReviews from "../components/reviews";

@@ -14,15 +14,15 @@ const portfolios = [
     },
 
     heroImage: "/portfolioimages/FuelnFlavour/fuel.png",
-    banner1: "/portfolioimages/FuelnFlavour/banner.png",
-    banner2: "/portfolioimages/FuelnFlavour/banner2.png",
+    banner1: "/portfolioimages/FuelnFlavour/banner.webp",
+    banner2: "/portfolioimages/FuelnFlavour/banner2.webp",
 
     socialMedia: [
-      "/portfolioimages/FuelnFlavour/banner3.png",
+      "/portfolioimages/FuelnFlavour/banner3.webp",
     ],
 
     uiux: [
-      "/portfolioimages/FuelnFlavour/banner4.png",
+      "/portfolioimages/FuelnFlavour/banner4.webp",
     ],
 
     // LIVE WEBSITE
@@ -44,13 +44,13 @@ const portfolios = [
     },
 
     heroImage: "/portfolioimages/cattlemonitoring/farm.png",
-    banner1: "/portfolioimages/cattlemonitoring/banner.png",
-    banner2: "/portfolioimages/cattlemonitoring/banner2.png",
+    banner1: "/portfolioimages/cattlemonitoring/banner.webp",
+    banner2: "/portfolioimages/cattlemonitoring/banner2.webp",
 
     socialMedia: [],
 
     uiux: [
-      "/portfolioimages/cattlemonitoring/banner3.png",
+      "/portfolioimages/cattlemonitoring/banner3.webp",
     ],
 
     // NO LIVE WEBSITE
@@ -72,13 +72,13 @@ const portfolios = [
     },
 
     heroImage: "/portfolioimages/carTracking/trackit.png",
-    banner1: "/portfolioimages/carTracking/banner.png",
-    banner2: "/portfolioimages/carTracking/banner2.png",
+    banner1: "/portfolioimages/carTracking/banner.webp",
+    banner2: "/portfolioimages/carTracking/banner2.webp",
 
     socialMedia: [],
 
     uiux: [
-      "/portfolioimages/carTracking/banner3.png",
+      "/portfolioimages/carTracking/banner3.webp",
     ],
 
     websiteUrl: null,
@@ -99,13 +99,13 @@ const portfolios = [
     },
 
     heroImage: "/portfolioimages/aatmNurture/aatm.png",
-    banner1: "/portfolioimages/aatmNurture/banner.png",
-    banner2: "/portfolioimages/aatmNurture/banner2.png",
+    banner1: "/portfolioimages/aatmNurture/banner.webp",
+    banner2: "/portfolioimages/aatmNurture/banner2.webp",
 
     socialMedia: [],
 
     uiux: [
-      "/portfolioimages/aatmNurture/banner3.png",
+      "/portfolioimages/aatmNurture/banner3.webp",
     ],
 
     websiteUrl: "https://aatmnurture.in",
@@ -126,13 +126,13 @@ const portfolios = [
     },
 
     heroImage: "/portfolioimages/starbucks/starbucks.png",
-    banner1: "/portfolioimages/starbucks/banner1.png",
-    banner2: "/portfolioimages/starbucks/banner.png",
+    banner1: "/portfolioimages/starbucks/banner1.webp",
+    banner2: "/portfolioimages/starbucks/banner.webp",
 
     socialMedia: [],
 
     uiux: [
-      "/portfolioimages/starbucks/banner3.png",
+      "/portfolioimages/starbucks/banner3.webp",
     ],
 
     websiteUrl: null,
@@ -153,8 +153,8 @@ const portfolios = [
     },
 
     heroImage: "/portfolioimages/downsyndrome/downsyndrome.png",
-    banner1: "/portfolioimages/downsyndrome/banner.png",
-    banner2: "/portfolioimages/downsyndrome/banner2.png",
+    banner1: "/portfolioimages/downsyndrome/banner.webp",
+    banner2: "/portfolioimages/downsyndrome/banner2.webp",
 
     socialMedia: [],
 
@@ -213,7 +213,7 @@ const portfolios = [
       "/portfolioimages/gadget/banner3.png",
     ],
 
-    websiteUrl: null,
+    websiteUrl: null, 
   },
 ];
 

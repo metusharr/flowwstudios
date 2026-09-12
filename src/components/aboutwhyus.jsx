@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import bgImage from "../assets/background.png";
 
-import missionImg from "../assets/mission.png";
-import visionImg from "../assets/vision.png";
-import valuesImg from "../assets/values.png";
+import missionImg from "../assets/mission.webp";
+import visionImg from "../assets/vision.webp";
+import valuesImg from "../assets/values.webp";
 
 
 const content = {
