@@ -10,22 +10,19 @@ const items = [
   {
     id: 0,
     title: "User-Centered Solutions",
-    desc:
-      "We put user experience at the heart of everything — delivering designs, marketing strategies, and development that connect, engage, and perform.",
+    desc: "We put user experience at the heart of everything — delivering designs, marketing strategies, and development that connect, engage, and perform.",
     image: why1,
   },
   {
     id: 1,
     title: "Time-Assured Delivery",
-    desc:
-      "Our deadlines are our priority. We ensure every project is completed within the promised timeline without compromising on quality.",
+    desc: "Our deadlines are our priority. We ensure every project is completed within the promised timeline without compromising on quality.",
     image: why2,
   },
   {
     id: 2,
     title: "Complete Digital Expertise",
-    desc:
-      "From social media marketing to UI/UX design and web & app development — we provide end-to-end solutions under one roof.",
+    desc: "From social media marketing to UI/UX design and web & app development — we provide end-to-end solutions under one roof.",
     image: why3,
   },
 ];
@@ -62,26 +59,23 @@ const WhyUs = () => {
 
   return (
     <AnimatedSection>
-      <section className="py-10 px-4 sm:px-6">
+      {/* FULL SCREEN WHITE BACKGROUND */}
+      <section className="relative z-0 w-full bg-white py-10 px-4 sm:px-6">
+        {" "}
+        {/* CONTENT CONTAINER */}
         <div
           className="
-        max-w-[1400px] 
-        border 
-        rounded-[2.5rem] 
-        bg-white 
-        mx-auto 
-        p-6 sm:p-8 md:p-14
-        grid grid-cols-1 md:grid-cols-2 
-        gap-10 md:gap-16 
-        items-center
-      "
+          w-full
+          max-w-[1500px]
+          mx-auto
+          p-6 sm:p-8 md:p-14
+          grid grid-cols-1 md:grid-cols-2
+          gap-10 md:gap-16
+          items-center
+        "
         >
           {/* LEFT CONTENT */}
-          <motion.div
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-          >
+          <motion.div variants={container} initial="hidden" whileInView="show">
             <motion.p
               variants={fadeUp}
               className="text-purple-500 font-medium mb-2 text-sm sm:text-base"
@@ -113,9 +107,7 @@ const WhyUs = () => {
                 >
                   <h3
                     className={`text-base sm:text-lg font-medium mb-2 ${
-                      active === index
-                        ? "text-purple-600"
-                        : "text-gray-700"
+                      active === index ? "text-purple-600" : "text-gray-700"
                     }`}
                   >
                     {item.title}
@@ -135,13 +127,14 @@ const WhyUs = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7 }}
             className="
-          relative 
-          w-full 
-          h-[260px] sm:h-[350px] md:h-150 
-          rounded-3xl md:rounded-4xl 
-          overflow-hidden 
-          shadow-xl
-        "
+    relative
+    z-0
+    w-full
+    h-[260px] sm:h-[350px] md:h-150
+    rounded-3xl md:rounded-4xl
+    overflow-hidden
+    shadow-xl
+  "
           >
             {items.map((item, index) => (
               <motion.img
@@ -151,7 +144,7 @@ const WhyUs = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: active === index ? 1 : 0 }}
                 transition={{ duration: 0.6 }}
-                className="absolute inset-0 w-full h-full object-center"
+                className="absolute inset-0 z-0 w-full h-full object-fit object-center"
               />
             ))}
           </motion.div>

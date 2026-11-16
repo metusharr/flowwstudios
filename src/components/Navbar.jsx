@@ -55,10 +55,7 @@ const Navbar = () => {
   // Close contact dropdown when clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        contactRef.current &&
-        !contactRef.current.contains(event.target)
-      ) {
+      if (contactRef.current && !contactRef.current.contains(event.target)) {
         setContactOpen(false);
       }
     };
@@ -104,17 +101,15 @@ const Navbar = () => {
       ========================== */}
       <header
         className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
-          scrolled
-            ? "py-2"
-            : "py-3 md:py-4"
+          scrolled ? "py-2" : "py-3 md:py-4"
         }`}
       >
         <div className="mx-auto w-full max-w-[1500px] px-4 sm:px-6 lg:px-8">
           <nav
             className={`relative flex h-[68px] items-center justify-between rounded-2xl px-4 sm:px-5 lg:px-6 transition-all duration-500 ${
               scrolled
-                ? "border border-white/[0.08] bg-black/80 shadow-[0_15px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl"
-                : "border border-white/[0.06] bg-black/25 backdrop-blur-md"
+                ? "border border-white/[0.08] bg-black backdrop-blur-xl"
+                : "border border-white/[0.06] bg-black backdrop-blur-md"
             }`}
           >
             {/* =========================
@@ -168,10 +163,7 @@ const Navbar = () => {
               {/* Worldwide indicator */}
               <div className="hidden items-center gap-2 pr-1 2xl:flex">
                 <div className="relative">
-                  <Globe2
-                    size={16}
-                    className="text-purple-400"
-                  />
+                  <Globe2 size={16} className="text-purple-400" />
 
                   <span className="absolute -right-1 -top-1 h-1.5 w-1.5 rounded-full bg-green-400">
                     <span className="absolute inset-0 animate-ping rounded-full bg-green-400 opacity-70" />
@@ -184,19 +176,13 @@ const Navbar = () => {
               </div>
 
               {/* CONTACT DROPDOWN */}
-              <div
-                ref={contactRef}
-                className="relative"
-              >
+              <div ref={contactRef} className="relative">
                 <button
                   type="button"
-                  onClick={() =>
-                    setContactOpen((prev) => !prev)
-                  }
+                  onClick={() => setContactOpen((prev) => !prev)}
                   className="group flex items-center gap-2 rounded-full bg-purple-600 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_30px_rgba(147,51,234,0.25)] transition-all duration-300 hover:bg-purple-500 hover:shadow-[0_10px_35px_rgba(147,51,234,0.4)]"
                 >
                   Let's Talk
-
                   <ChevronDown
                     size={16}
                     className={`transition-transform duration-300 ${
@@ -225,40 +211,7 @@ const Navbar = () => {
                       </p>
                     </div>
 
-                    {/* USA WHATSAPP */}
-                    <a
-                      href="https://wa.me/18432875990"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group flex items-center justify-between rounded-xl p-3 transition-all duration-300 hover:bg-white/[0.06]"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-green-500/10 text-green-400">
-                          <FaWhatsapp size={20} />
-                        </div>
-
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <p className="text-sm font-medium text-white">
-                              USA WhatsApp
-                            </p>
-
-                            <span className="rounded-md bg-purple-500/10 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-purple-300">
-                              US
-                            </span>
-                          </div>
-
-                          <p className="mt-0.5 text-xs text-white/45">
-                            +1 843-287-5990
-                          </p>
-                        </div>
-                      </div>
-
-                      <ArrowUpRight
-                        size={16}
-                        className="text-white/25 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
-                      />
-                    </a>
+                   
 
                     {/* INDIA WHATSAPP */}
                     <a
@@ -323,7 +276,6 @@ const Navbar = () => {
                           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-60" />
                           <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
                         </span>
-
                         We usually respond quickly
                       </p>
                     </div>
@@ -338,27 +290,19 @@ const Navbar = () => {
             <button
               type="button"
               aria-label={
-                mobileOpen
-                  ? "Close navigation menu"
-                  : "Open navigation menu"
+                mobileOpen ? "Close navigation menu" : "Open navigation menu"
               }
               aria-expanded={mobileOpen}
-              onClick={() =>
-                setMobileOpen((prev) => !prev)
-              }
+              onClick={() => setMobileOpen((prev) => !prev)}
               className="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] text-white transition-all hover:bg-white/[0.1] lg:hidden"
             >
-              {mobileOpen ? (
-                <X size={21} />
-              ) : (
-                <Menu size={22} />
-              )}
+              {mobileOpen ? <X size={21} /> : <Menu size={22} />}
             </button>
           </nav>
         </div>
       </header>
 
-            {/* =========================
+      {/* =========================
           MOBILE MENU
       ========================== */}
       <div
@@ -399,33 +343,25 @@ const Navbar = () => {
                       to={item.path}
                       onClick={() => setMobileOpen(false)}
                       className={`group flex items-center justify-between border-b border-white/[0.06] py-4 transition-all ${
-                        active
-                          ? "text-white"
-                          : "text-white/60 hover:text-white"
+                        active ? "text-white" : "text-white/60 hover:text-white"
                       }`}
                     >
                       <div className="flex items-center gap-4">
                         <span
                           className={`text-[10px] font-medium ${
-                            active
-                              ? "text-purple-400"
-                              : "text-white/20"
+                            active ? "text-purple-400" : "text-white/20"
                           }`}
                         >
                           0{index + 1}
                         </span>
 
-                        <span className="text-lg font-medium">
-                          {item.name}
-                        </span>
+                        <span className="text-lg font-medium">{item.name}</span>
                       </div>
 
                       <ArrowUpRight
                         size={18}
                         className={`transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${
-                          active
-                            ? "text-purple-400"
-                            : "text-white/20"
+                          active ? "text-purple-400" : "text-white/20"
                         }`}
                       />
                     </Link>
@@ -447,9 +383,7 @@ const Navbar = () => {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-green-400" />
                   </span>
 
-                  <span className="text-[10px] text-white/40">
-                    Available
-                  </span>
+                  <span className="text-[10px] text-white/40">Available</span>
                 </div>
               </div>
 
@@ -465,10 +399,7 @@ const Navbar = () => {
 
                 <div className="relative flex items-center gap-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10">
-                    <FaWhatsapp
-                      size={22}
-                      className="text-white"
-                    />
+                    <FaWhatsapp size={22} className="text-white" />
                   </div>
 
                   <div className="text-left">
@@ -508,9 +439,7 @@ const Navbar = () => {
                   </div>
 
                   <div className="min-w-0">
-                    <p className="text-xs text-white/40">
-                      India WhatsApp
-                    </p>
+                    <p className="text-xs text-white/40">India WhatsApp</p>
 
                     <p className="mt-0.5 whitespace-nowrap text-sm font-medium text-white">
                       +91 9773777618
@@ -528,9 +457,7 @@ const Navbar = () => {
                   </div>
 
                   <div className="min-w-0">
-                    <p className="text-xs text-white/40">
-                      Call India
-                    </p>
+                    <p className="text-xs text-white/40">Call India</p>
 
                     <p className="mt-0.5 whitespace-nowrap text-sm font-medium text-white">
                       +91 8448276790
@@ -542,10 +469,7 @@ const Navbar = () => {
 
             {/* Footer */}
             <div className="mt-7 flex items-center justify-center gap-2 border-t border-white/[0.06] pt-5">
-              <Globe2
-                size={14}
-                className="text-purple-400"
-              />
+              <Globe2 size={14} className="text-purple-400" />
 
               <p className="text-xs text-white/35">
                 Helping brands grow worldwide

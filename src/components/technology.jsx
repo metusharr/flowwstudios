@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import AnimatedSection from "./AnimatedSection";
@@ -45,7 +46,7 @@ const Technologies = () => {
 
   return (
     <AnimatedSection>
-      <section className="relative py-16 md:py-10 overflow-hidden">
+      <section className="relative w-full py-16 md:py-10 overflow-hidden">
 
         {/* HEADER */}
         <motion.div
@@ -63,18 +64,25 @@ const Technologies = () => {
           </h2>
         </motion.div>
 
-        {/* CONTAINER */}
+        {/* FULL WIDTH WHITE STRIP */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
-          className="md:max-w-350 mx-auto bg-white rounded-3xl md:rounded-[2.5rem] 
-                      py-8 md:py-12 px-4 sm:px-6 md:px-10 
-                      relative overflow-hidden"
+          className="
+            relative
+            w-full
+            bg-white
+            rounded-none
+            py-8 md:py-12
+            px-4 sm:px-6 md:px-10
+            overflow-hidden
+          "
         >
 
           {/* FADE EDGES */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-20 bg-gradient-to-r from-white to-transparent z-10" />
+
           <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-20 bg-gradient-to-l from-white to-transparent z-10" />
 
           {/* MARQUEE */}
@@ -82,13 +90,18 @@ const Technologies = () => {
             ref={marqueeRef}
             className="flex items-center gap-4 sm:gap-6 md:gap-10 overflow-x-hidden"
           >
+
             {[...technologies, ...technologies].map((tech, index) => (
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.1 }}
-                className="flex items-center gap-3 sm:gap-4 bg-black rounded-full 
-                         px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 
-                         min-w-max shadow-lg"
+                className="
+                  flex items-center gap-3 sm:gap-4
+                  bg-black rounded-full
+                  px-4 sm:px-6 md:px-8
+                  py-2 sm:py-3 md:py-4
+                  min-w-max shadow-lg
+                "
               >
                 <img
                   src={tech.img}
