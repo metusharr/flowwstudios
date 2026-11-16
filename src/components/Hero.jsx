@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Phone, MessageCircle } from "lucide-react";
@@ -36,7 +37,8 @@ Could you help me with the best solution for my business?`;
   const whatsappLink = `https://wa.me/919773777618?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
-    <section className="relative w-full min-h-[650px] sm:min-h-[750px] p-7 md:min-h-[800px] lg:min-h-[calc(100vh-55px)] bg-[#fdfdfc] text-black overflow-hidden">
+    <section className="relative w-full min-h-[650px] sm:min-h-[750px] p-7 md:min-h-[800px] lg:min-h-[calc(100vh-55px)] bg-[#fdfdfc] text-black overflow-hidden max-sm:p-0 max-sm:min-h-[900px]">
+
       {/* TOPOGRAPHIC BACKGROUND IMAGE */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <img
@@ -89,6 +91,11 @@ Could you help me with the best solution for my business?`;
           flex sm:hidden
           items-end justify-center
           pointer-events-none
+
+          max-sm:bottom-[115px]
+          max-sm:right-[-10%]
+          max-sm:w-[75%]
+          max-sm:h-[290px]
         "
       >
         <img
@@ -100,7 +107,8 @@ Could you help me with the best solution for my business?`;
 
       {/* MAIN CONTENT */}
       <div
-        className="mt-7
+        className="
+        mt-7
         max-w-[1440px] mx-auto
         min-h-[650px]
         sm:min-h-[750px]
@@ -110,6 +118,12 @@ Could you help me with the best solution for my business?`;
         px-5 sm:px-8 md:px-10 lg:px-20
         pt-28 sm:pt-32 md:pt-36 lg:pt-0
         pb-[390px] sm:pb-28 lg:pb-24
+
+        max-sm:mt-0
+        max-sm:min-h-[900px]
+        max-sm:px-5
+        max-sm:pt-24
+        max-sm:pb-[400px]
       "
       >
         {/* LEFT CONTENT */}
@@ -126,11 +140,11 @@ Could you help me with the best solution for my business?`;
           {/* LABEL */}
           <motion.div
             variants={fadeUp}
-            className="flex items-center gap-2 mb-4 sm:mb-5"
+            className="flex items-center gap-2 mb-4 sm:mb-5 max-sm:mb-4"
           >
             <span className="w-5 h-[3px] bg-[#bd65f5] shrink-0" />
 
-            <span className="text-[11px] sm:text-sm md:text-[15px] font-medium text-black tracking-tight">
+            <span className="text-[11px] sm:text-sm md:text-[15px] font-medium text-black tracking-tight max-sm:text-[11px]">
               Strategy. UI/UX. Branding. Development
             </span>
           </motion.div>
@@ -150,6 +164,11 @@ Could you help me with the best solution for my business?`;
               sm:leading-[1.2]
               tracking-[-1.5px]
               sm:tracking-[-1.8px]
+
+              max-sm:text-[32px]
+              max-sm:leading-[1.12]
+              max-sm:tracking-[-1.3px]
+              max-[380px]:text-[29px]
             "
           >
             <span className="block text-[#686868]">From bold ideas to</span>
@@ -170,6 +189,10 @@ Could you help me with the best solution for my business?`;
               text-[13px] sm:text-[14px] md:text-[15px]
               leading-[1.7]
               text-[#777777]
+
+              max-sm:mt-4
+              max-sm:text-[13px]
+              max-sm:leading-[1.6]
             "
           >
             We design, develop and market experiences for teams building the
@@ -183,9 +206,16 @@ Could you help me with the best solution for my business?`;
               flex flex-wrap items-center
               gap-2 sm:gap-3
               mt-5 sm:mt-7
+
+              max-sm:mt-5
+              max-sm:gap-3
+              max-sm:items-start
             "
           >
-            <Link to="/contact" className="max-[380px]:w-full">
+            <Link
+              to="/contact"
+              className="max-[380px]:w-full max-sm:max-[380px]:block"
+            >
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
@@ -199,13 +229,19 @@ Could you help me with the best solution for my business?`;
                   font-medium
                   min-w-[170px] sm:min-w-[188px]
                   w-full
+
+                  max-sm:min-h-[44px]
+                  max-sm:py-3
                 "
               >
                 Book your service today
               </motion.button>
             </Link>
 
-            <Link to="/services" className="max-[380px]:w-full">
+            <Link
+              to="/services"
+              className="max-[380px]:w-full max-sm:max-[380px]:block"
+            >
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
@@ -221,6 +257,8 @@ Could you help me with the best solution for my business?`;
                   min-w-[135px] sm:min-w-[145px]
                   w-full
                   transition-colors
+
+                  max-sm:min-h-[44px]
                 "
               >
                 View Services
@@ -232,45 +270,75 @@ Could you help me with the best solution for my business?`;
       </div>
 
       {/* BOTTOM CONTACT STRIP */}
+      <div className="
+        absolute z-10 bottom-10 left-0 w-full pointer-events-none
 
-      <div className="absolute z-10 bottom-10 left-0 w-full pointer-events-none">
+        max-sm:bottom-5
+      ">
         <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-16">
-          <div className="relative flex flex-col md:flex-row items-center justify-start gap-5 md:gap-10 lg:gap-14 min-h-[85px]">
+          <div className="
+            relative flex flex-col md:flex-row
+            items-center justify-start
+            gap-5 md:gap-10 lg:gap-14
+            min-h-[85px]
+
+            max-sm:flex-row
+            max-sm:flex-wrap
+            max-sm:items-center
+            max-sm:gap-x-5
+            max-sm:gap-y-3
+            max-sm:min-h-0
+          ">
+
             {/* CALL */}
             <a
               href="tel:+918448276790"
-              className="flex items-center gap-3 group pointer-events-auto shrink-0"
+              className="
+                flex items-center gap-3 group
+                pointer-events-auto shrink-0
+
+                max-sm:gap-2
+              "
             >
-              <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600">
+              <div className="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600 max-sm:w-8 max-sm:h-8">
                 <Phone size={18} strokeWidth={1.8} />
               </div>
 
               <div>
-                <p className="text-[12px] font-semibold text-black">
+                <p className="text-[12px] font-semibold text-black max-sm:text-[11px]">
                   Call India
                 </p>
 
-                <p className="text-[11px] text-gray-500">+91 8448276790</p>
+                <p className="text-[11px] text-gray-500 max-sm:text-[10px]">
+                  +91 8448276790
+                </p>
               </div>
             </a>
 
             {/* WHATSAPP */}
             <a
-              href="https://wa.me/919773777618"
+              href="https://wa.me/9197737777618"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-3 pointer-events-auto shrink-0"
+              className="
+                flex items-center gap-3
+                pointer-events-auto shrink-0
+
+                max-sm:gap-2
+              "
             >
-              <div className="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center text-green-600">
+              <div className="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center text-green-600 max-sm:w-8 max-sm:h-8">
                 <MessageCircle size={19} strokeWidth={1.8} />
               </div>
 
               <div>
-                <p className="text-[12px] font-semibold text-black">
+                <p className="text-[12px] font-semibold text-black max-sm:text-[11px]">
                   India WhatsApp
                 </p>
 
-                <p className="text-[11px] text-gray-500">+91 9773777618</p>
+                <p className="text-[11px] text-gray-500 max-sm:text-[10px]">
+                  +91 9773777618
+                </p>
               </div>
             </a>
 
@@ -294,27 +362,27 @@ Could you help me with the best solution for my business?`;
         whileHover={{ scale: 1.04 }}
         whileTap={{ scale: 0.96 }}
         className="
-    fixed z-[9999]
-    bottom-4 right-3
-    sm:bottom-5 sm:right-6
-    md:right-8
-    bg-black text-white
-    rounded-full
-    flex items-center gap-2 sm:gap-4
-    pl-2 sm:pl-3
-    pr-4 sm:pr-7
-    py-2
-    shadow-xl
-    cursor-pointer
-  "
+          fixed z-[9999]
+          bottom-4 right-3
+          sm:bottom-5 sm:right-6
+          md:right-8
+          bg-black text-white
+          rounded-full
+          flex items-center gap-2 sm:gap-4
+          pl-2 sm:pl-3
+          pr-4 sm:pr-7
+          py-2
+          shadow-xl
+          cursor-pointer
+        "
       >
         <span
           className="
-      w-8 h-8 sm:w-9 sm:h-9
-      rounded-full bg-white
-      flex items-center justify-center
-      text-green-600 text-lg
-    "
+            w-8 h-8 sm:w-9 sm:h-9
+            rounded-full bg-white
+            flex items-center justify-center
+            text-green-600 text-lg
+          "
         >
           <MessageCircle size={19} />
         </span>
